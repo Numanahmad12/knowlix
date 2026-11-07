@@ -1,4 +1,4 @@
-# Deploying pdf-analyzer (Vercel build)
+# Deploying Citewise (Vercel build)
 
 Split deployment: the Next.js frontend goes to Vercel, the FastAPI backend
 goes to a Docker host. Nothing is deployed yet — the backend host choice is
@@ -9,7 +9,7 @@ still open (Fly.io or Render).
 1. Import the repo (or the `frontend/` directory) as a new Vercel project.
 2. Set the environment variable:
    - `NEXT_PUBLIC_API_URL` — the public base URL of the deployed backend,
-     e.g. `https://pdf-analyzer-backend.fly.dev` (no trailing slash).
+     e.g. `https://citewise-backend.fly.dev` (no trailing slash).
 3. Deploy. The frontend calls the backend at `${NEXT_PUBLIC_API_URL}/api/...`.
 
 ## Backend → Fly.io or Render (Dockerfile deploy)
@@ -56,7 +56,7 @@ Optional backend tunables (defaults in `backend/.env.example`):
 
 - **CORS:** `backend/app/main.py` currently allows all origins
   (`allow_origins=["*"]`) for local dev. Restrict it to the Vercel domain
-  (e.g. `["https://pdf-analyzer.vercel.app"]`) before deploying.
+  (e.g. `["https://citewise.vercel.app"]`) before deploying.
 - **Keys:** never commit `.env` or a real `GROQ_API_KEY`. Rotate any key
   that was ever shared in chat or pasted into a public place.
 - **Health check:** after deploy, `curl <backend-url>/api/health` should

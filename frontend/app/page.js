@@ -34,6 +34,19 @@ function truncate(text, n = 600) {
   return text.length > n ? text.slice(0, n) + "…" : text;
 }
 
+// The backend appends a markdown-italic "_Support: n/m claims backed by
+// the document._" line to the answer body (for clients that render
+// markdown). This frontend renders answers as plain text and already shows
+// the same information in the structured Support metadata line below, so
+// strip the trailing line here to avoid showing it twice — once with
+// literal underscores — above the metadata.
+const SUPPORT_LINE_RE = /\n\n_Support: \d+\/\d+ claims backed by the document\._\s*$/;
+
+function stripSupportLine(text) {
+  if (!text) return "";
+  return text.replace(SUPPORT_LINE_RE, "");
+}
+
 export default function Home() {
   const [health, setHealth] = useState({ checked: false, ok: false, data: null });
   // Loaded document (from /api/upload or /api/sample), or null.
@@ -161,7 +174,7 @@ export default function Home() {
           ...prev,
           {
             question: q,
-            answer: result.answer,
+            answer: stripSupportLine(result.answer),
             citations: result.citations || [],
             support: result.support || null,
             refused: !!result.refused,
@@ -210,7 +223,7 @@ export default function Home() {
   return (
     <div className="page">
       <header className="page-head">
-        <h1>📄 PDF Q&amp;A Studio</h1>
+        <h1>📄 Citewise</h1>
         <p>
           Upload a PDF and ask questions about it — answers are grounded in the
           document, with page citations.

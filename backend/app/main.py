@@ -1,4 +1,4 @@
-"""FastAPI backend for the pdf_analyzer Vercel build.
+"""FastAPI backend for the Citewise Vercel build.
 
 Endpoints:
     GET    /api/health                  liveness + LLM mode
@@ -22,7 +22,7 @@ from . import core, llm
 
 APP_VERSION = "1.0.0"
 
-app = FastAPI(title="pdf-analyzer backend", version=APP_VERSION)
+app = FastAPI(title="Citewise backend", version=APP_VERSION)
 
 # Dev-open CORS. Production must restrict this to the Vercel domain —
 # see ../DEPLOY.md.

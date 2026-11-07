@@ -1,6 +1,6 @@
-# PDF Q&A Studio — Frontend
+# Citewise — Frontend
 
-Next.js (App Router) frontend for the Vercel version of `pdf_analyzer`, the
+Next.js (App Router) frontend for the Vercel version of Citewise, the
 RAG PDF Q&A app. Upload a PDF, get a summary, and ask questions — every
 answer is grounded in the document, with page citations, a support count,
 and a retrieval note. Questions the document can't answer are refused
