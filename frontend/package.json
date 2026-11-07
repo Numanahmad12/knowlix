@@ -1,0 +1,1 @@
+{"dependencies":{"next":"^14.2.18","react":"^18.3.1","react-dom":"^18.3.1"},"description":"PDF Q&A Studio — RAG PDF question-answering frontend (Next.js) for the Vercel version of pdf_analyzer.","engines":{"node":">=18.17"},"name":"pdf-analyzer-frontend","private":true,"scripts":{"build":"next build","dev":"next dev","lint":"next lint","start":"next start"},"version":"1.0.0"}

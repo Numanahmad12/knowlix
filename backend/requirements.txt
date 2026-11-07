@@ -1,0 +1,24 @@
+# PDF analyzer FastAPI backend (Vercel build)
+# Versions match the reference app (commit 8250835 of Numanahmad12/pdf_analyzer);
+# streamlit and python-telegram-bot are intentionally NOT included.
+#
+# Embeddings run via ONNX Runtime (same all-MiniLM-L6-v2 model, same 384-dim
+# vectors) instead of sentence-transformers + torch: torch's import alone
+# takes ~500 MB-1 GB RSS, which does not fit a 512 MB free-tier host
+# (Render free). The ONNX model + tokenizer are bundled under app/onnx_model/.
+pypdf==4.2.0
+requests==2.32.2
+numpy==2.1.3
+faiss-cpu==1.9.0
+onnxruntime==1.31.1
+tokenizers==0.22.2
+
+# FastAPI backend
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+httpx==0.28.1
+
+# Tests only
+pytest==8.3.1
+reportlab==4.2.5
