@@ -503,7 +503,7 @@ export default function Home() {
       </div>
 
       <footer className="foot">
-        PDF Q&amp;A Studio · Answers are grounded in the document you upload.
+        Knowlix · Answers are grounded in the document you upload.
       </footer>
     </div>
   );
