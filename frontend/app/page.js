@@ -223,7 +223,7 @@ export default function Home() {
   return (
     <div className="page">
       <header className="page-head">
-        <h1>📄 Citewise</h1>
+        <h1>📄 Nexora</h1>
         <p>
           Upload a PDF and ask questions about it — answers are grounded in the
           document, with page citations.

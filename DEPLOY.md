@@ -1,15 +1,29 @@
-# Deploying Citewise (Vercel build)
+# Deploying Nexora (Vercel build)
 
-Split deployment: the Next.js frontend goes to Vercel, the FastAPI backend
-goes to a Docker host. Nothing is deployed yet — the backend host choice is
-still open (Fly.io or Render).
+Split deployment: the Next.js frontend lives on Vercel, the FastAPI backend
+on Render (both free tiers).
+
+## Live deployment (7 Nov 2026)
+
+- **Frontend:** https://pdf-analyzer-vercel-c3zqu6ndw-noumanahmad1916-2595s-projects.vercel.app
+- **Backend:** https://pdf-analyzer-backend-16uw.onrender.com
+  (`GET /api/health` → `{"status":"ok","version":"1.0.0","llm_mode":"groq"}`)
+- `NEXT_PUBLIC_API_URL` on Vercel is set to the Render backend URL.
+
+**Remaining rename step:** the GitHub repo (`pdf-analyzer-vercel`), the
+Vercel project, and the Render service still carry the old `pdf-analyzer`
+names. Renaming them gives the app its Nexora URLs — after the Render
+service is renamed, update `NEXT_PUBLIC_API_URL` in Vercel and redeploy
+the frontend (the Render URL changes with the service name).
+
+The sections below record how the deployment was set up.
 
 ## Frontend → Vercel
 
 1. Import the repo (or the `frontend/` directory) as a new Vercel project.
 2. Set the environment variable:
    - `NEXT_PUBLIC_API_URL` — the public base URL of the deployed backend,
-     e.g. `https://citewise-backend.fly.dev` (no trailing slash).
+     e.g. `https://nexora-backend.fly.dev` (no trailing slash).
 3. Deploy. The frontend calls the backend at `${NEXT_PUBLIC_API_URL}/api/...`.
 
 ## Backend → Fly.io or Render (Dockerfile deploy)
@@ -56,7 +70,7 @@ Optional backend tunables (defaults in `backend/.env.example`):
 
 - **CORS:** `backend/app/main.py` currently allows all origins
   (`allow_origins=["*"]`) for local dev. Restrict it to the Vercel domain
-  (e.g. `["https://citewise.vercel.app"]`) before deploying.
+  (e.g. `["https://nexora.vercel.app"]`) before deploying.
 - **Keys:** never commit `.env` or a real `GROQ_API_KEY`. Rotate any key
   that was ever shared in chat or pasted into a public place.
 - **Health check:** after deploy, `curl <backend-url>/api/health` should

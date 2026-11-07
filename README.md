@@ -1,4 +1,4 @@
-# Citewise
+# Nexora
 
 RAG-based PDF summarizer & Q&A — upload a PDF, ask questions, get answers
 grounded in the document with page citations.
