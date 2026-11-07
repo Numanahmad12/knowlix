@@ -1,6 +1,6 @@
-# Nexora backend (FastAPI)
+# Knowlix backend (FastAPI)
 
-RAG PDF Q&A backend for the Vercel build of Numan Ahmad's Nexora.
+RAG PDF Q&A backend for the Vercel build of Numan Ahmad's Knowlix.
 Extracted from the reference Streamlit app (commit 8250835 of
 `Numanahmad12/pdf_analyzer`) with behaviour and thresholds unchanged; the
 only functional change is Groq (`openai/gpt-oss-120b`) replacing local
@@ -43,8 +43,8 @@ Interactive docs: http://localhost:8000/docs
 
 ```bash
 cd backend
-docker build -t nexora-backend .
-docker run --rm -p 8000:8000 -e GROQ_API_KEY=... nexora-backend
+docker build -t knowlix-backend .
+docker run --rm -p 8000:8000 -e GROQ_API_KEY=... knowlix-backend
 ```
 
 ## Tests

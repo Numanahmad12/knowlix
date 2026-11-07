@@ -1,7 +1,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Nexora",
+  title: "Knowlix",
   description:
     "Upload a PDF and ask questions about it — answers are grounded in the document, with page citations.",
 };

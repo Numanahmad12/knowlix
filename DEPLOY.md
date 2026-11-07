@@ -1,4 +1,4 @@
-# Deploying Nexora (Vercel build)
+# Deploying Knowlix (Vercel build)
 
 Split deployment: the Next.js frontend lives on Vercel, the FastAPI backend
 on Render (both free tiers).
@@ -12,7 +12,7 @@ on Render (both free tiers).
 
 **Remaining rename step:** the GitHub repo (`pdf-analyzer-vercel`), the
 Vercel project, and the Render service still carry the old `pdf-analyzer`
-names. Renaming them gives the app its Nexora URLs — after the Render
+names. Renaming them gives the app its Knowlix URLs — after the Render
 service is renamed, update `NEXT_PUBLIC_API_URL` in Vercel and redeploy
 the frontend (the Render URL changes with the service name).
 
@@ -23,7 +23,7 @@ The sections below record how the deployment was set up.
 1. Import the repo (or the `frontend/` directory) as a new Vercel project.
 2. Set the environment variable:
    - `NEXT_PUBLIC_API_URL` — the public base URL of the deployed backend,
-     e.g. `https://nexora-backend.fly.dev` (no trailing slash).
+     e.g. `https://knowlix-backend.fly.dev` (no trailing slash).
 3. Deploy. The frontend calls the backend at `${NEXT_PUBLIC_API_URL}/api/...`.
 
 ## Backend → Fly.io or Render (Dockerfile deploy)
@@ -70,7 +70,7 @@ Optional backend tunables (defaults in `backend/.env.example`):
 
 - **CORS:** `backend/app/main.py` currently allows all origins
   (`allow_origins=["*"]`) for local dev. Restrict it to the Vercel domain
-  (e.g. `["https://nexora.vercel.app"]`) before deploying.
+  (e.g. `["https://knowlix.vercel.app"]`) before deploying.
 - **Keys:** never commit `.env` or a real `GROQ_API_KEY`. Rotate any key
   that was ever shared in chat or pasted into a public place.
 - **Health check:** after deploy, `curl <backend-url>/api/health` should
