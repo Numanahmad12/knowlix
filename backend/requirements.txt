@@ -7,6 +7,7 @@
 # takes ~500 MB-1 GB RSS, which does not fit a 512 MB free-tier host
 # (Render free). The ONNX model + tokenizer are bundled under app/onnx_model/.
 pypdf==4.2.0
+PyMuPDF==1.26.7
 requests==2.32.2
 numpy==2.1.3
 faiss-cpu==1.9.0
@@ -18,7 +19,7 @@ fastapi==0.115.6
 uvicorn[standard]==0.34.0
 python-multipart==0.0.20
 httpx==0.28.1
-redis>=5.0.0
+redis==5.3.1
 
 # Tests only
 pytest==8.3.1
