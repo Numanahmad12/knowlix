@@ -22,18 +22,18 @@ export function Header({
   };
 
   return (
-    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e4ebeb] flex items-center justify-between px-6 sticky top-0 z-30 shadow-subtle">
+    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-[#e8dfe4] flex items-center justify-between px-6 sticky top-0 z-30 shadow-subtle">
       <div className="flex items-center gap-4">
         {/* Breadcrumbs */}
         <div className="flex items-center gap-2 text-xs md:text-sm">
-          <span className="text-[#647474] font-medium">Knowlix</span>
-          <span className="text-[#cbd6d6]">/</span>
-          <span className="text-[#0f1717] font-bold">{viewTitles[currentView] || "Overview"}</span>
+          <span className="text-[#6b7194] font-medium">Knowlix</span>
+          <span className="text-[#e8dfe4]">/</span>
+          <span className="text-[#232b4a] font-bold">{viewTitles[currentView] || "Overview"}</span>
         </div>
 
         {activeDoc && (
-          <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-[#f3f8f8] border border-[#a8c9c8] text-xs text-[#274141] font-mono font-medium">
-            <FileText className="w-3.5 h-3.5 text-[#f45b0b]" />
+          <div className="hidden lg:flex items-center gap-2 px-3 py-1 rounded-full bg-[#fdeef3] border border-[#f3b8ca] text-xs text-[#1e2a5c] font-mono font-medium">
+            <FileText className="w-3.5 h-3.5 text-[#ff4d00]" />
             <span className="max-w-[200px] truncate">{activeDoc.filename}</span>
           </div>
         )}
@@ -43,11 +43,11 @@ export function Header({
         {/* Quick Search Trigger */}
         <button
           onClick={onOpenCommandPalette}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#f8fafa] hover:bg-[#f1f5f5] text-xs text-[#647474] hover:text-[#0f1717] border border-[#e4ebeb] transition-colors"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#fff9f3] hover:bg-[#fdeef3] text-xs text-[#6b7194] hover:text-[#232b4a] border border-[#e8dfe4] transition-colors"
         >
-          <Search className="w-3.5 h-3.5 text-[#5a9695]" />
+          <Search className="w-3.5 h-3.5 text-[#2e7d7b]" />
           <span className="hidden sm:inline">Search commands…</span>
-          <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white border border-[#cbd6d6] text-[#647474] font-bold">
+          <kbd className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white border border-[#e8dfe4] text-[#6b7194] font-bold">
             ⌘K
           </kbd>
         </button>
@@ -65,10 +65,10 @@ export function Header({
         </Button>
 
         {/* Backend Online Status Pill */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#e5f0f0] border border-[#a8c9c8] text-xs font-mono font-semibold text-[#274141]">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#fdeef3] border border-[#f3b8ca] text-xs font-mono font-semibold text-[#1e2a5c]">
           <span
             className={`w-2 h-2 rounded-full ${
-              health.ok ? "bg-[#f45b0b] shadow-[0_0_8px_rgba(244,91,11,0.6)]" : "bg-rose-500 animate-ping"
+              health.ok ? "bg-[#ff4d00] shadow-[0_0_8px_rgba(244,91,11,0.6)]" : "bg-rose-500 animate-ping"
             }`}
           />
           <span className="hidden md:inline">

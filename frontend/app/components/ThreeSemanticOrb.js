@@ -32,18 +32,18 @@ export default function ThreeSemanticOrb({
     const orbGroup = new THREE.Group();
     scene.add(orbGroup);
 
-    // 1. Core Sphere (Soft Teal #A8C9C8)
+    // 1. Core Sphere — Direction 4: the orange sun (#FF4D00)
     const coreGeo = new THREE.IcosahedronGeometry(36, 2);
     const coreMat = new THREE.MeshBasicMaterial({
-      color: 0xa8c9c8, // Primary Teal
+      color: 0xff4d00, // Vivid Orange sun
       wireframe: true,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.4,
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     orbGroup.add(coreMesh);
 
-    // 2. 384 Latent Vector Nodes: Teal (#A8C9C8) + Key Knowledge Nodes in Vibrant Orange (#F45B0B)
+    // 2. 384 Latent Vector Nodes: Navy (#1E2A5C) + Key Knowledge Nodes in Vivid Orange (#FF4D00)
     const nodeCount = 384;
     const nodePositions = new Float32Array(nodeCount * 3);
     const nodeColors = new Float32Array(nodeCount * 3);
@@ -51,8 +51,8 @@ export default function ThreeSemanticOrb({
     const phi = Math.PI * (3 - Math.sqrt(5));
     const radius = 68;
 
-    // Teal: R=0.66, G=0.79, B=0.78 (#A8C9C8)
-    // Orange: R=0.96, G=0.36, B=0.04 (#F45B0B)
+    // Navy: R=0.118, G=0.165, B=0.361 (#1E2A5C)
+    // Orange: R=1.0, G=0.302, B=0.0 (#FF4D00)
     for (let i = 0; i < nodeCount; i++) {
       const y = 1 - (i / (nodeCount - 1)) * 2;
       const radiusAtY = Math.sqrt(1 - y * y);
@@ -66,16 +66,16 @@ export default function ThreeSemanticOrb({
       nodePositions[i * 3 + 1] = y * radius * jitter;
       nodePositions[i * 3 + 2] = z * radius * jitter;
 
-      // ~15% Key Knowledge Nodes are Vibrant Orange, remaining are Primary Teal
+      // ~18% Key Knowledge Nodes are Vivid Orange, remaining are Navy
       const isOrangeNode = Math.random() < 0.18;
       if (isOrangeNode) {
-        nodeColors[i * 3] = 0.957;     // R (244)
-        nodeColors[i * 3 + 1] = 0.357; // G (91)
-        nodeColors[i * 3 + 2] = 0.043; // B (11) -> Vibrant Orange #F45B0B
+        nodeColors[i * 3] = 1.0;       // R (255)
+        nodeColors[i * 3 + 1] = 0.302; // G (77)
+        nodeColors[i * 3 + 2] = 0.0;   // B (0) -> Vivid Orange #FF4D00
       } else {
-        nodeColors[i * 3] = 0.659;     // R (168)
-        nodeColors[i * 3 + 1] = 0.788; // G (201)
-        nodeColors[i * 3 + 2] = 0.784; // B (200) -> Primary Teal #A8C9C8
+        nodeColors[i * 3] = 0.118;     // R (30)
+        nodeColors[i * 3 + 1] = 0.165; // G (42)
+        nodeColors[i * 3 + 2] = 0.361; // B (92) -> Navy #1E2A5C
       }
     }
 
@@ -83,15 +83,15 @@ export default function ThreeSemanticOrb({
     nodeGeo.setAttribute("position", new THREE.BufferAttribute(nodePositions, 3));
     nodeGeo.setAttribute("color", new THREE.BufferAttribute(nodeColors, 3));
 
-    // Particle texture
+    // Particle texture (neutral white sprite — vertex colours carry the navy/orange)
     const canvas = document.createElement("canvas");
     canvas.width = 32;
     canvas.height = 32;
     const ctx = canvas.getContext("2d");
     const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
     gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-    gradient.addColorStop(0.4, "rgba(168, 201, 200, 0.9)");
-    gradient.addColorStop(1, "rgba(168, 201, 200, 0)");
+    gradient.addColorStop(0.4, "rgba(255, 255, 255, 0.9)");
+    gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
     ctx.fillStyle = gradient;
     ctx.beginPath();
     ctx.arc(16, 16, 16, 0, Math.PI * 2);
@@ -111,7 +111,7 @@ export default function ThreeSemanticOrb({
     const particles = new THREE.Points(nodeGeo, nodeMat);
     orbGroup.add(particles);
 
-    // 3. Knowledge Graph Connections (Teal #A8C9C8)
+    // 3. Knowledge Graph Connections (Navy #1E2A5C)
     const lineIndices = [];
     for (let i = 0; i < nodeCount; i += 3) {
       for (let j = i + 1; j < Math.min(i + 12, nodeCount); j++) {
@@ -130,20 +130,20 @@ export default function ThreeSemanticOrb({
     lineGeo.setIndex(lineIndices);
 
     const lineMat = new THREE.LineBasicMaterial({
-      color: 0xa8c9c8, // Primary Teal
+      color: 0x1e2a5c, // Navy
       transparent: true,
-      opacity: 0.45,
+      opacity: 0.35,
     });
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     orbGroup.add(lines);
 
-    // 4. Outer Orbital Ring (Soft Teal)
+    // 4. Outer Orbital Ring (Navy)
     const ringGeo = new THREE.RingGeometry(82, 83.5, 64);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0xa8c9c8,
+      color: 0x1e2a5c,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.45,
     });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     ring.rotation.x = Math.PI / 3;
@@ -168,6 +168,11 @@ export default function ThreeSemanticOrb({
       container.addEventListener("mousemove", onMouseMove);
     }
 
+    // Respect prefers-reduced-motion: render the orb static, never spin it.
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     // Animation loop
     let animId;
     let clock = new THREE.Clock();
@@ -176,17 +181,19 @@ export default function ThreeSemanticOrb({
       animId = requestAnimationFrame(animate);
       const time = clock.getElapsedTime();
 
-      // Smooth follow
-      mouseX += (targetX - mouseX) * 0.05;
-      mouseY += (targetY - mouseY) * 0.05;
+      if (!prefersReducedMotion) {
+        // Smooth follow
+        mouseX += (targetX - mouseX) * 0.05;
+        mouseY += (targetY - mouseY) * 0.05;
 
-      orbGroup.rotation.y += 0.005 + (mode === "searching" ? 0.025 : 0);
-      orbGroup.rotation.x = mouseY * 0.6 + Math.sin(time * 0.4) * 0.08;
-      orbGroup.rotation.z = mouseX * 0.6;
+        orbGroup.rotation.y += 0.005 + (mode === "searching" ? 0.025 : 0);
+        orbGroup.rotation.x = mouseY * 0.6 + Math.sin(time * 0.4) * 0.08;
+        orbGroup.rotation.z = mouseX * 0.6;
 
-      const pulse = Math.sin(time * 2) * 0.04 + 1;
-      coreMesh.scale.set(pulse, pulse, pulse);
-      ring.rotation.z -= 0.003;
+        const pulse = Math.sin(time * 2) * 0.04 + 1;
+        coreMesh.scale.set(pulse, pulse, pulse);
+        ring.rotation.z -= 0.003;
+      }
 
       renderer.render(scene, camera);
     };
@@ -227,8 +234,9 @@ export default function ThreeSemanticOrb({
   }, [mode, size, interactive]);
 
   return (
-    <div 
-      ref={mountRef} 
+    <div
+      ref={mountRef}
+      aria-hidden="true"
       className="relative flex items-center justify-center pointer-events-auto"
       style={{ width: "100%", height: "100%", minHeight: `${size}px` }}
     />

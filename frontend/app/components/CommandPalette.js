@@ -134,33 +134,33 @@ export default function CommandPalette({
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-slate-900/40 backdrop-blur-sm animate-fadeIn">
       <div 
-        className="w-full max-w-2xl bg-white border border-[#a8c9c8] rounded-2xl shadow-2xl overflow-hidden text-[#0f1717]"
+        className="w-full max-w-2xl bg-white border border-[#f3b8ca] rounded-2xl shadow-2xl overflow-hidden text-[#232b4a]"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center px-4 py-3.5 border-b border-[#e4ebeb] bg-[#f8fafa]">
-          <Search className="w-5 h-5 text-[#5a9695] mr-3" />
+        <div className="flex items-center px-4 py-3.5 border-b border-[#e8dfe4] bg-[#fff9f3]">
+          <Search className="w-5 h-5 text-[#2e7d7b] mr-3" />
           <input
             type="text"
             placeholder="Type a command or search actions..."
-            className="w-full bg-transparent border-none outline-none text-[#0f1717] placeholder-[#94a3a3] text-sm font-sans"
+            className="w-full bg-transparent border-none outline-none text-[#232b4a] placeholder-[#9aa0b8] text-sm font-sans"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
           />
-          <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-mono text-[#647474] bg-white border border-[#cbd6d6] rounded">
+          <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-mono text-[#6b7194] bg-white border border-[#e8dfe4] rounded">
             ESC
           </kbd>
           <button 
             onClick={onClose} 
-            className="p-1 ml-2 text-[#647474] hover:text-[#0f1717] transition-colors"
+            className="p-1 ml-2 text-[#6b7194] hover:text-[#232b4a] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        <div className="max-h-96 overflow-y-auto p-2 divide-y divide-[#f1f5f5]">
+        <div className="max-h-96 overflow-y-auto p-2 divide-y divide-[#fdeef3]">
           {filtered.length === 0 ? (
-            <div className="p-8 text-center text-[#647474] text-sm">
+            <div className="p-8 text-center text-[#6b7194] text-sm">
               No matching actions found for "{query}"
             </div>
           ) : (
@@ -170,27 +170,27 @@ export default function CommandPalette({
                 <button
                   key={item.id}
                   onClick={item.handler}
-                  className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#f3f8f8] transition-all text-left group"
+                  className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-[#fdeef3] transition-all text-left group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-[#e5f0f0] border border-[#a8c9c8] flex items-center justify-center text-[#274141] group-hover:scale-105 transition-all">
-                      <Icon className="w-4 h-4 text-[#375f5f]" />
+                    <div className="w-9 h-9 rounded-xl bg-[#fdeef3] border border-[#f3b8ca] flex items-center justify-center text-[#1e2a5c] group-hover:scale-105 transition-all">
+                      <Icon className="w-4 h-4 text-[#1e2a5c]" />
                     </div>
                     <div>
-                      <div className="text-sm font-bold text-[#0f1717] group-hover:text-[#f45b0b] transition-colors">
+                      <div className="text-sm font-bold text-[#232b4a] group-hover:text-[#ff4d00] transition-colors">
                         {item.title}
                       </div>
-                      <div className="text-xs text-[#647474] font-sans">
+                      <div className="text-xs text-[#6b7194] font-sans">
                         {item.subtitle}
                       </div>
                     </div>
                   </div>
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border font-bold ${
                     item.badge === "Action"
-                      ? "bg-[#fef5f0] text-[#f45b0b] border-[rgba(244,91,11,0.3)]"
+                      ? "bg-[#fff1e8] text-[#ff4d00] border-[rgba(244,91,11,0.3)]"
                       : item.badge === "Danger"
                       ? "bg-rose-50 text-rose-600 border-rose-200"
-                      : "bg-[#e5f0f0] text-[#274141] border-[#a8c9c8]"
+                      : "bg-[#fdeef3] text-[#1e2a5c] border-[#f3b8ca]"
                   }`}>
                     {item.badge}
                   </span>
@@ -200,9 +200,9 @@ export default function CommandPalette({
           )}
         </div>
 
-        <div className="px-4 py-2 bg-[#f8fafa] border-t border-[#e4ebeb] flex items-center justify-between text-[11px] text-[#647474] font-mono">
+        <div className="px-4 py-2 bg-[#fff9f3] border-t border-[#e8dfe4] flex items-center justify-between text-[11px] text-[#6b7194] font-mono">
           <div className="flex items-center gap-2 font-semibold">
-            <span className="w-2 h-2 rounded-full bg-[#f45b0b] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[#ff4d00] animate-pulse" />
             Knowlix Command Hub
           </div>
           <div>Navigate with ↑ ↓ • Select ↵</div>

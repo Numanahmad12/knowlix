@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,39 +5,51 @@
 @layer base {
   :root {
     /* ═══════════════════════════════════════════════════════════════════════════
-       OFFICIAL KNOWLIX BRAND COLOR PALETTE (LIGHT-FIRST SPECIFICATION)
-       Primary Teal: #A8C9C8 | Pure White: #FFFFFF | Vibrant Orange: #F45B0B
+       DIRECTION 4 ("GO ALL OUT") PALETTE — pink field, navy ink, vivid orange.
+       Teal survives only as the supporting colour for cache / citation semantics.
+       Pink field: #F5C9D6 | Navy ink: #1E2A5C | Vivid orange: #FF4D00
+       Cream background: #FFF9F3 | Supporting teal: #2E7D7B
        ═══════════════════════════════════════════════════════════════════════════ */
-    --brand-teal: #a8c9c8;
-    --brand-teal-light: #e5f0f0;
-    --brand-teal-soft: rgba(168, 201, 200, 0.22);
-    --brand-teal-border: rgba(168, 201, 200, 0.55);
-    --brand-teal-dark: #375f5f;
+    --brand-navy: #1e2a5c;
+    --brand-navy-ink: #232b4a;
+    --brand-navy-soft: rgba(30, 42, 92, 0.72);
 
-    --brand-orange: #f45b0b;
-    --brand-orange-hover: #dc4805;
-    --brand-orange-light: #fef5f0;
-    --brand-orange-glow: rgba(244, 91, 11, 0.25);
+    --brand-pink: #f5c9d6;
+    --brand-pink-line: #f3b8ca;
+    --brand-pink-soft: #fdeef3;
+
+    --brand-orange: #ff4d00;
+    --brand-orange-hover: #e04400;
+    --brand-orange-light: #fff1e8;
+    --brand-orange-glow: rgba(255, 77, 0, 0.25);
+
+    --brand-teal: #2e7d7b;
+    --brand-teal-light: #dcebe9;
+    --brand-teal-soft: rgba(46, 125, 123, 0.14);
+    --brand-teal-border: #5fa8a6;
+    --brand-teal-dark: #1d4f4e;
 
     --pure-white: #ffffff;
-    --bg-main: #f8fafa;
+    --bg-main: #fff9f3;
     --bg-surface: #ffffff;
-    --bg-surface-subtle: #f1f5f5;
+    --bg-surface-subtle: #fdeef3;
 
-    /* Text Hierarchy (High-contrast, clean neutral slate) */
-    --text-primary: #0f1717;
-    --text-secondary: #334141;
-    --text-muted: #647474;
-    --text-faint: #94a3a3;
+    /* Text Hierarchy */
+    --text-primary: #232b4a;
+    --text-secondary: #4a5170;
+    --text-muted: #6b7194;
+    --text-faint: #9aa0b8;
 
     /* Borders & Shadows */
-    --border-subtle: #e4ebeb;
-    --border-teal: #a8c9c8;
-    --border-orange: #f45b0b;
+    --border-subtle: #e8dfe4;
+    --border-navy: #1e2a5c;
+    --border-pink: #f3b8ca;
 
-    --shadow-subtle: 0 1px 3px 0 rgba(15, 23, 23, 0.05);
-    --shadow-card: 0 2px 10px -2px rgba(15, 23, 23, 0.05), 0 1px 3px 0 rgba(15, 23, 23, 0.03);
-    --shadow-card-hover: 0 8px 24px -4px rgba(15, 23, 23, 0.08), 0 2px 6px -1px rgba(15, 23, 23, 0.04);
+    --shadow-subtle: 0 1px 3px 0 rgba(30, 42, 92, 0.06);
+    --shadow-card: 0 2px 10px -2px rgba(30, 42, 92, 0.07), 0 1px 3px 0 rgba(30, 42, 92, 0.04);
+    --shadow-card-hover: 0 8px 24px -4px rgba(30, 42, 92, 0.10), 0 2px 6px -1px rgba(30, 42, 92, 0.06);
+    --shadow-pink: 5px 5px 0 #f5c9d6;
+    --shadow-pink-sm: 3px 3px 0 #f5c9d6;
 
     --sidebar-width: 260px;
     --sidebar-collapsed-width: 76px;
@@ -73,31 +83,68 @@
   }
 }
 
-/* ── Light-First Visual Atmosphere ─────────────────────────────────────────── */
+/* ── Cream paper with a faint pink dot grid (flat — no gradient wash) ─────── */
 .bg-knowlix-pattern {
   background-color: var(--bg-main);
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(168, 201, 200, 0.28), transparent 50%),
-    radial-gradient(circle at 100% 100%, rgba(244, 91, 11, 0.06), transparent 40%),
-    radial-gradient(rgba(168, 201, 200, 0.25) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 24px 24px;
+  background-image: radial-gradient(rgba(245, 201, 214, 0.55) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* Clean White Card with Subtle Teal Accents */
+/* ── Direction 4 hero: pink field with a white dot grid ───────────────────── */
+.hero-d4 {
+  background-color: var(--brand-pink);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.55) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+/* Clean White Card with Pink Accents */
 .knowlix-card {
   background-color: var(--pure-white);
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-card);
   border-radius: 16px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .knowlix-card:hover {
-  border-color: rgba(168, 201, 200, 0.7);
+  border-color: var(--brand-pink-line);
   box-shadow: var(--shadow-card-hover);
 }
 
-/* Scanning Beam Animation (Teal) */
+/* View entrance (was referenced by page.js but never defined — now real) */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease both;
+}
+
+/* Staggered rise for hero / section entrances (CSS-first motion) */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.animate-rise {
+  animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-rise-1 { animation-delay: 0.05s; }
+.animate-rise-2 { animation-delay: 0.15s; }
+.animate-rise-3 { animation-delay: 0.25s; }
+.animate-rise-4 { animation-delay: 0.35s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeIn, .animate-rise,
+  .animate-rise-1, .animate-rise-2, .animate-rise-3, .animate-rise-4,
+  .animate-scan-beam {
+    animation: none;
+  }
+}
+
+/* Scanning Beam Animation (Orange, on the pink field) */
 @keyframes scanBeam {
   0% { transform: translateY(-100%); opacity: 0; }
   50% { opacity: 0.8; }
@@ -117,18 +164,18 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(168, 201, 200, 0.45);
+  background: rgba(30, 42, 92, 0.25);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(168, 201, 200, 0.8);
+  background: rgba(30, 42, 92, 0.45);
 }
 
-/* ── Status Badges & Citations ────────────────────────────────────────────── */
+/* ── Status Badges & Citations (teal = cache semantics, orange = miss) ───── */
 .badge-exact {
-  background: rgba(168, 201, 200, 0.25);
-  color: #274141;
-  border: 1px solid #a8c9c8;
+  background: var(--brand-teal-light);
+  color: var(--brand-teal-dark);
+  border: 1px solid var(--brand-teal-border);
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   padding: 3px 9px;
@@ -140,9 +187,9 @@
 }
 
 .badge-semantic {
-  background: rgba(168, 201, 200, 0.2);
-  color: #2e4d4d;
-  border: 1px solid #86b3b2;
+  background: rgba(46, 125, 123, 0.12);
+  color: var(--brand-teal-dark);
+  border: 1px solid var(--brand-teal);
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   padding: 3px 9px;
@@ -154,9 +201,9 @@
 }
 
 .badge-miss {
-  background: rgba(244, 91, 11, 0.1);
-  color: #dc4805;
-  border: 1px solid rgba(244, 91, 11, 0.35);
+  background: var(--brand-orange-light);
+  color: var(--brand-orange-hover);
+  border: 1px solid rgba(255, 77, 0, 0.4);
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   padding: 3px 9px;
@@ -167,35 +214,54 @@
   font-weight: 600;
 }
 
-/* Citation Spotlight (Teal with Orange Marker) */
+/* Cache-hit stamp: orange border, slight tilt */
+.stamp-hit {
+  color: var(--brand-orange-hover);
+  background: #ffffff;
+  border: 2px solid var(--brand-orange);
+  transform: rotate(-1.5deg);
+  box-shadow: 2px 2px 0 rgba(255, 77, 0, 0.3);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Citation Spotlight (Teal = evidence) */
 .citation-pill {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   padding: 3px 10px;
-  background: rgba(168, 201, 200, 0.2);
-  border: 1px solid #a8c9c8;
-  color: #274141;
+  background: var(--brand-teal-light);
+  border: 1px solid var(--brand-teal);
+  color: var(--brand-teal-dark);
   border-radius: 8px;
   font-size: 12px;
   font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .citation-pill:hover {
-  background: rgba(168, 201, 200, 0.4);
-  border-color: #5a9695;
-  color: #0f1717;
+  background: #c4e2df;
+  border-color: var(--brand-teal-dark);
+  color: var(--brand-teal-dark);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(168, 201, 200, 0.3);
+  box-shadow: 0 2px 8px rgba(46, 125, 123, 0.3);
 }
 
 /* Drag & Drop Upload Zone */
 .dropzone-container {
-  border: 2px dashed #a8c9c8;
-  background: #fbfdfd;
+  border: 2px dashed var(--brand-navy);
+  background: #fffdf9;
   border-radius: 18px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
@@ -204,27 +270,27 @@
 
 .dropzone-container:hover, .dropzone-container.dragging {
   border-color: var(--brand-orange);
-  background: rgba(254, 245, 240, 0.6);
-  box-shadow: 0 0 20px rgba(244, 91, 11, 0.12);
+  background: var(--brand-orange-light);
+  box-shadow: 0 0 20px rgba(255, 77, 0, 0.12);
 }
 
 /* Chat Messages */
 .chat-bubble-user {
-  background: #f45b0b;
+  background: #ff4d00;
   color: #ffffff;
   border-radius: 18px 18px 4px 18px;
   padding: 14px 18px;
   font-size: 14px;
-  box-shadow: 0 4px 14px rgba(244, 91, 11, 0.25);
+  box-shadow: 0 4px 14px rgba(255, 77, 0, 0.3);
   max-width: 80%;
   line-height: 1.55;
-  font-weight: 450;
+  font-weight: 500;
 }
 
 .chat-bubble-assistant {
   background: #ffffff;
-  border: 1px solid #e4ebeb;
-  box-shadow: var(--shadow-card);
+  border: 1.5px solid var(--brand-navy);
+  box-shadow: var(--shadow-pink-sm);
   border-radius: 18px 18px 18px 4px;
   padding: 18px 22px;
   font-size: 14px;

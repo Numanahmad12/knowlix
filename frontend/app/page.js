@@ -21,7 +21,6 @@ import {
   FileCode,
   FileText,
   Filter,
-  Flame,
   HelpCircle,
   Info,
   Layers,
@@ -69,7 +68,6 @@ import { Header } from "./components/Header";
 import { Button } from "./components/ui/Button";
 import { Badge } from "./components/ui/Badge";
 import { Card } from "./components/ui/Card";
-import { MetricCard } from "./components/ui/MetricCard";
 import { EmptyState } from "./components/ui/EmptyState";
 import { Input } from "./components/ui/Input";
 import CommandPalette from "./components/CommandPalette";
@@ -79,7 +77,7 @@ const ThreeSemanticOrb = dynamic(() => import("./components/ThreeSemanticOrb"), 
   ssr: false,
   loading: () => (
     <div className="w-full h-64 flex items-center justify-center">
-      <div className="w-8 h-8 rounded-full border-2 border-[#a8c9c8] border-t-transparent animate-spin" />
+      <div className="w-8 h-8 rounded-full border-2 border-[#f3b8ca] border-t-transparent animate-spin" />
     </div>
   ),
 });
@@ -443,7 +441,7 @@ export default function Home() {
   };
 
   return (
-    <div className={`${currentView === "workspace" ? "h-screen max-h-screen overflow-hidden" : "min-h-screen"} bg-[#f8fafa] text-[#0f1717] flex flex-col font-sans selection:bg-[#a8c9c8]/30 selection:text-[#0f1717]`}>
+    <div className={`${currentView === "workspace" ? "h-screen max-h-screen overflow-hidden" : "min-h-screen"} bg-[#fff9f3] text-[#232b4a] flex flex-col font-sans selection:bg-[#f3b8ca]/30 selection:text-[#232b4a]`}>
       {/* ⌘K Command Hub Dialog */}
       <CommandPalette
         isOpen={commandPaletteOpen}
@@ -467,7 +465,7 @@ export default function Home() {
 
       {/* ── Main Canvas (Light-First Experience) ───────────────────────────────── */}
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 bg-knowlix-pattern ${
+        className={`flex-1 flex flex-col transition-[margin] duration-300 bg-knowlix-pattern ${
           sidebarCollapsed ? "ml-16" : "ml-64"
         } ${currentView === "workspace" ? "h-screen max-h-screen overflow-hidden" : "min-h-screen"}`}
       >
@@ -483,9 +481,9 @@ export default function Home() {
 
         {/* Global Toast Notification */}
         {notice && (
-          <div className="fixed top-20 right-6 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white border border-[#a8c9c8] shadow-card-hover animate-fadeIn text-xs">
-            <CheckCircle2 className="w-4 h-4 text-[#f45b0b]" />
-            <span className="text-[#0f1717] font-semibold">{notice.msg}</span>
+          <div className="fixed top-20 right-6 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white border border-[#f3b8ca] shadow-card-hover animate-fadeIn text-xs" role="status" aria-live="polite">
+            <CheckCircle2 className="w-4 h-4 text-[#ff4d00]" />
+            <span className="text-[#232b4a] font-semibold">{notice.msg}</span>
           </div>
         )}
 
@@ -513,188 +511,196 @@ export default function Home() {
           {/* VIEW 1: OVERVIEW DASHBOARD */}
           {currentView === "overview" && (
             <div className="flex flex-col gap-6 animate-fadeIn">
-              {/* Hero Banner with Three.js 3D Vector Orb (Teal & Orange) */}
-              <Card className="p-6 md:p-8 relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-6 border-[#a8c9c8] shadow-card">
-                <div className="flex-1 z-10 flex flex-col gap-3.5">
-                  <Badge variant="mono" icon={Zap}>
-                    Document-Aware Semantic Caching Engine
-                  </Badge>
+              {/* Hero — Direction 4: pink field, navy Anton type, orange accent */}
+              <div className="hero-d4 border-2 border-[#1e2a5c] rounded-[28px] p-6 md:p-10 relative overflow-hidden animate-rise">
+                <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                  <div className="flex-1 flex flex-col gap-4">
+                    <div className="flex items-center gap-3 font-mono text-[11px] font-bold tracking-[0.18em] uppercase text-[#1e2a5c]">
+                      <span>Knowlix — Document Intelligence</span>
+                      <span className="hidden md:block flex-1 h-px bg-white/80 max-w-[220px]" />
+                      <span className="ml-auto">RAG · PDF · GROQ</span>
+                    </div>
 
-                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#0f1717] leading-tight">
-                    High-Precision Document Intelligence with{" "}
-                    <span className="text-[#f45b0b]">
-                      Zero-Overhead Vector Caching
-                    </span>
-                  </h1>
+                    <h1 className="font-display uppercase text-[#1e2a5c] leading-[0.92] tracking-[0.005em] text-balance text-[64px] md:text-[88px] lg:text-[104px]">
+                      Every answer<br />has a{" "}
+                      <span className="font-accent italic font-medium normal-case text-[#ff4d00]">page.</span>
+                    </h1>
 
-                  <p className="text-[#647474] text-xs md:text-sm max-w-2xl leading-relaxed">
-                    Instantly resolve semantically equivalent questions without re-running vector retrieval or Groq LLM generation. Bound to document SHA-256 with exact-match L1 and FAISS cosine similarity L2.
-                  </p>
+                    <p className="text-[15px] leading-relaxed text-[#232b4a]/75 max-w-xl font-medium">
+                      Knowlix reads your PDFs, answers in plain language, and{" "}
+                      <b className="text-[#1e2a5c] font-extrabold">pins every claim to the page it came from</b>.
+                      Repeat questions never touch the LLM twice — the semantic cache answers them in milliseconds.
+                    </p>
 
-                  <div className="flex flex-wrap items-center gap-3 pt-2">
-                    <Button
-                      variant="primary"
-                      onClick={() => setCurrentView("workspace")}
-                      icon={ArrowRight}
-                      iconPosition="right"
-                    >
-                      Open AI Workspace
-                    </Button>
+                    <div className="flex flex-wrap items-center gap-3 pt-2">
+                      <Button
+                        variant="primary"
+                        size="lg"
+                        onClick={() => setCurrentView("workspace")}
+                        icon={ArrowRight}
+                        iconPosition="right"
+                      >
+                        Open AI Workspace
+                      </Button>
 
-                    <Button
-                      variant="secondary"
-                      onClick={() => setCurrentView("documents")}
-                      icon={UploadCloud}
-                    >
-                      Upload PDF
-                    </Button>
+                      <Button
+                        variant="secondary"
+                        size="lg"
+                        onClick={() => setCurrentView("documents")}
+                        icon={UploadCloud}
+                      >
+                        Upload PDF
+                      </Button>
 
-                    <Button
-                      variant="outline"
-                      onClick={handleRunBenchmark}
-                      loading={benchmarking}
-                      icon={Play}
-                    >
-                      {benchmarking ? "Running Benchmark…" : "Run 3-Mode Benchmark"}
-                    </Button>
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        onClick={handleRunBenchmark}
+                        loading={benchmarking}
+                        icon={Play}
+                      >
+                        {benchmarking ? "Running Benchmark…" : "Run 3-Mode Benchmark"}
+                      </Button>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-5 pt-2 text-[11px] text-[#1e2a5c] font-mono font-bold">
+                      <span className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-white" /> ONNX MiniLM 384d
+                      </span>
+                      <span className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#1e2a5c]" /> FAISS Cosine L2
+                      </span>
+                      <span className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#ff4d00]" /> Sub-10ms Exact L1
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-[#647474] font-mono">
-                    <span className="flex items-center gap-1.5 font-medium">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#a8c9c8]" /> ONNX MiniLM 384d
-                    </span>
-                    <span className="flex items-center gap-1.5 font-medium">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#5a9695]" /> FAISS Cosine L2
-                    </span>
-                    <span className="flex items-center gap-1.5 font-medium">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#f45b0b]" /> Sub-10ms Exact L1
-                    </span>
+                  {/* 3D Interactive Latent Vector Orb — re-lit as the orange sun */}
+                  <div className="hidden lg:flex flex-col items-center justify-center w-[300px] shrink-0 gap-3">
+                    <div className="w-[280px] h-[260px] relative flex items-center justify-center">
+                      <ThreeSemanticOrb size={260} mode={asking ? "searching" : "idle"} />
+                    </div>
+                    <div className="text-[10px] font-mono font-bold text-[#1e2a5c] bg-white border-[1.5px] border-[#1e2a5c] rounded-full px-3 py-1 shadow-pink-sm">
+                      384-d Latent Space
+                    </div>
                   </div>
                 </div>
-
-                {/* 3D Interactive Latent Vector Orb (Teal & Orange Particles) */}
-                <div className="w-full lg:w-72 h-64 relative flex items-center justify-center flex-shrink-0">
-                  <ThreeSemanticOrb size={260} mode={asking ? "searching" : "idle"} />
-                  <div className="absolute bottom-1 right-2 text-[10px] font-mono text-[#274141] bg-white/90 px-2 py-0.5 rounded border border-[#a8c9c8] font-bold shadow-subtle">
-                    384-d Latent Space
-                  </div>
-                </div>
-              </Card>
-
-              {/* Metric KPI Cards (Knowlix Palette) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <MetricCard
-                  title="Semantic Cache Hit Rate"
-                  value={cacheStats?.hit_rate != null ? `${(cacheStats.hit_rate * 100).toFixed(1)}%` : "0.0%"}
-                  subvalue={`${(cacheStats?.exact_hits || 0) + (cacheStats?.semantic_hits || 0)} hits`}
-                  description="Queries served without LLM call"
-                  icon={Zap}
-                  color="teal"
-                />
-
-                <MetricCard
-                  title="Avg Cache Latency"
-                  value={`${(cacheStats?.avg_lookup_latency_ms ?? cacheStats?.avg_cache_latency_ms ?? 0).toFixed(0)} ms`}
-                  subvalue="vs ~1,850ms RAG"
-                  description="Up to 98% latency reduction"
-                  icon={Clock}
-                  color="teal"
-                />
-
-                <MetricCard
-                  title="Tokens & Cost Saved"
-                  value={(cacheStats?.estimated_tokens_saved ?? cacheStats?.tokens_saved ?? 0).toLocaleString()}
-                  subvalue={`$${(cacheStats?.estimated_cost_saved_usd ?? cacheStats?.estimated_cost_saved ?? 0).toFixed(4)}`}
-                  description="Zero redundant LLM tokens"
-                  icon={Flame}
-                  color="orange"
-                />
-
-                <MetricCard
-                  title="Indexed Knowledge"
-                  value={documents.length}
-                  subvalue={activeDoc ? `${activeDoc.total_chunks} chunks` : "ready"}
-                  description={activeDoc ? truncate(activeDoc.filename, 20) : "No active document"}
-                  icon={FileCode}
-                  color="teal"
-                />
               </div>
 
-              {/* Active Document Quick Spotlight */}
+              {/* By the numbers — replaces the four identical KPI cards */}
+              <div className="animate-rise animate-rise-1">
+                <div className="flex items-baseline gap-3.5">
+                  <h2 className="font-display text-[28px] uppercase tracking-wide text-[#1e2a5c]">By the numbers</h2>
+                  <span className="font-mono text-[11px] text-[#6b7194] tracking-[0.1em] uppercase">Live from your cache — not a demo</span>
+                  <span className="flex-1 h-[2px] bg-[#1e2a5c]" />
+                </div>
+                <div className="grid grid-cols-2 lg:grid-cols-4 border-y-2 border-[#1e2a5c] bg-white mt-4">
+                  <div className="p-5 md:p-6 border-l border-[#e8dfe4] first:border-l-0 max-lg:[&:nth-child(3)]:border-l-0 max-lg:[&:nth-child(n+3)]:border-t">
+                    <div className="font-display text-[56px] leading-none text-[#1e2a5c]">
+                      {cacheStats?.hit_rate != null ? `${(cacheStats.hit_rate * 100).toFixed(1)}` : "0.0"}
+                      <em className="not-italic text-[32px] text-[#ff4d00] align-[0.3em] ml-0.5">%</em>
+                    </div>
+                    <div className="font-mono text-[10px] font-bold tracking-[0.12em] uppercase text-[#2e7d7b] mt-2.5">Cache hit rate</div>
+                    <div className="text-xs text-[#6b7194] mt-1">{(cacheStats?.exact_hits || 0) + (cacheStats?.semantic_hits || 0)} hits · served without an LLM call</div>
+                  </div>
+                  <div className="p-5 md:p-6 border-l border-[#e8dfe4] max-lg:[&:nth-child(n+3)]:border-t">
+                    <div className="font-display text-[56px] leading-none text-[#1e2a5c]">
+                      {(cacheStats?.avg_lookup_latency_ms ?? cacheStats?.avg_cache_latency_ms ?? 0).toFixed(0)}
+                      <em className="not-italic text-[32px] text-[#ff4d00] align-[0.3em] ml-0.5">ms</em>
+                    </div>
+                    <div className="font-mono text-[10px] font-bold tracking-[0.12em] uppercase text-[#2e7d7b] mt-2.5">Avg cache latency</div>
+                    <div className="text-xs text-[#6b7194] mt-1">vs ~1,850ms RAG · up to 98% latency reduction</div>
+                  </div>
+                  <div className="p-5 md:p-6 border-l border-[#e8dfe4] max-lg:[&:nth-child(3)]:border-l-0 max-lg:[&:nth-child(n+3)]:border-t">
+                    <div className="font-display text-[56px] leading-none text-[#1e2a5c]">
+                      {(cacheStats?.estimated_tokens_saved ?? cacheStats?.tokens_saved ?? 0).toLocaleString()}
+                    </div>
+                    <div className="font-mono text-[10px] font-bold tracking-[0.12em] uppercase text-[#2e7d7b] mt-2.5">Tokens &amp; cost saved</div>
+                    <div className="text-xs text-[#6b7194] mt-1">${(cacheStats?.estimated_cost_saved_usd ?? cacheStats?.estimated_cost_saved ?? 0).toFixed(4)} · zero redundant LLM tokens</div>
+                  </div>
+                  <div className="p-5 md:p-6 border-l border-[#e8dfe4] max-lg:[&:nth-child(n+3)]:border-t">
+                    <div className="font-display text-[56px] leading-none text-[#1e2a5c]">{documents.length}</div>
+                    <div className="font-mono text-[10px] font-bold tracking-[0.12em] uppercase text-[#2e7d7b] mt-2.5">Indexed knowledge</div>
+                    <div className="text-xs text-[#6b7194] mt-1">{activeDoc ? `${activeDoc.total_chunks} chunks · ${truncate(activeDoc.filename, 20)}` : "No active document"}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Active Document Spotlight */}
               {activeDoc && (
-                <Card className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-[#a8c9c8]">
+                <div className="bg-white border-2 border-[#1e2a5c] rounded-2xl shadow-pink p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-rise animate-rise-2">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-[#e5f0f0] border border-[#a8c9c8] flex items-center justify-center text-[#274141] flex-shrink-0">
-                      <FileText className="w-6 h-6 text-[#f45b0b]" />
+                    <div className="w-12 h-12 rounded-xl bg-[#fdeef3] border-[1.5px] border-[#f3b8ca] flex items-center justify-center flex-shrink-0">
+                      <FileText className="w-6 h-6 text-[#ff4d00]" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm md:text-base font-bold text-[#0f1717]">{activeDoc.filename}</h3>
+                        <h3 className="text-sm md:text-base font-bold text-[#1e2a5c]">{activeDoc.filename}</h3>
                         <Badge variant="exact" size="sm">Active Index</Badge>
                       </div>
-                      <p className="text-xs text-[#647474] font-mono mt-1">
+                      <p className="text-xs text-[#6b7194] font-mono mt-1">
                         SHA-256: {activeDoc.doc_hash ? `${activeDoc.doc_hash.slice(0, 16)}…` : "generated"} • {activeDoc.total_pages} pages • {activeDoc.total_chunks} chunks
                       </p>
                     </div>
                   </div>
 
                   <Button
-                    variant="primary"
+                    variant="secondary"
                     size="sm"
                     onClick={() => setCurrentView("workspace")}
                     icon={BookOpen}
                   >
                     Open in Workspace
                   </Button>
-                </Card>
+                </div>
               )}
 
-              {/* Quick Actions Navigation Matrix */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card
-                  hoverable
-                  onClick={() => setCurrentView("workspace")}
-                  className="flex flex-col gap-2 group"
-                >
-                  <div className="flex items-center justify-between">
-                    <BookOpen className="w-5 h-5 text-[#f45b0b] group-hover:scale-110 transition-transform" />
-                    <ArrowRight className="w-4 h-4 text-[#94a3a3] group-hover:text-[#f45b0b] transition-colors" />
-                  </div>
-                  <h4 className="font-bold text-[#0f1717] text-sm">AI Workspace Studio</h4>
-                  <p className="text-xs text-[#647474] leading-relaxed">
-                    Ask natural questions against your document with guaranteed page citations and sentence support checks.
-                  </p>
-                </Card>
-
-                <Card
-                  hoverable
-                  onClick={() => setCurrentView("cache")}
-                  className="flex flex-col gap-2 group"
-                >
-                  <div className="flex items-center justify-between">
-                    <Zap className="w-5 h-5 text-[#375f5f] group-hover:scale-110 transition-transform" />
-                    <ArrowRight className="w-4 h-4 text-[#94a3a3] group-hover:text-[#375f5f] transition-colors" />
-                  </div>
-                  <h4 className="font-bold text-[#0f1717] text-sm">Semantic Cache Inspector</h4>
-                  <p className="text-xs text-[#647474] leading-relaxed">
-                    Explore active vector cache entries, inspect cosine similarity scores, and benchmark response speed.
-                  </p>
-                </Card>
-
-                <Card
-                  hoverable
-                  onClick={() => setCurrentView("guardrails")}
-                  className="flex flex-col gap-2 group"
-                >
-                  <div className="flex items-center justify-between">
-                    <ShieldCheck className="w-5 h-5 text-[#274141] group-hover:scale-110 transition-transform" />
-                    <ArrowRight className="w-4 h-4 text-[#94a3a3] group-hover:text-[#274141] transition-colors" />
-                  </div>
-                  <h4 className="font-bold text-[#0f1717] text-sm">Security & Guardrails</h4>
-                  <p className="text-xs text-[#647474] leading-relaxed">
-                    View prompt injection barriers, groundedness validation (0.40 threshold), and sentence claim verification.
-                  </p>
-                </Card>
+              {/* Index — replaces the three identical quick-action cards */}
+              <div className="animate-rise animate-rise-3">
+                <div className="flex items-baseline gap-3.5">
+                  <h2 className="font-display text-[28px] uppercase tracking-wide text-[#1e2a5c]">Index</h2>
+                  <span className="font-mono text-[11px] text-[#6b7194] tracking-[0.1em] uppercase">Where to go next</span>
+                  <span className="flex-1 h-[2px] bg-[#1e2a5c]" />
+                </div>
+                <div className="border-t-2 border-[#1e2a5c] mt-4">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentView("workspace")}
+                    className="flex items-center gap-5 py-5 px-2 border-b border-[#e8dfe4] cursor-pointer transition-[background-color,padding] hover:bg-[#fdeef3] hover:px-4 group text-left w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4d00] focus-visible:ring-inset"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-[#1e2a5c] text-white font-display text-[15px] flex items-center justify-center shrink-0 pt-0.5">1</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-base font-extrabold text-[#1e2a5c]">AI Workspace Studio</div>
+                      <div className="text-[13px] text-[#6b7194] mt-0.5">Ask natural questions against your document with guaranteed page citations and sentence support checks.</div>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-[#9aa0b8] group-hover:text-[#ff4d00] group-hover:translate-x-1 transition-[transform,color] shrink-0" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentView("cache")}
+                    className="flex items-center gap-5 py-5 px-2 border-b border-[#e8dfe4] cursor-pointer transition-[background-color,padding] hover:bg-[#fdeef3] hover:px-4 group text-left w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4d00] focus-visible:ring-inset"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-[#1e2a5c] text-white font-display text-[15px] flex items-center justify-center shrink-0 pt-0.5">2</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-base font-extrabold text-[#1e2a5c]">Semantic Cache Inspector</div>
+                      <div className="text-[13px] text-[#6b7194] mt-0.5">Explore active vector cache entries, inspect cosine similarity scores, and benchmark response speed.</div>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-[#9aa0b8] group-hover:text-[#ff4d00] group-hover:translate-x-1 transition-[transform,color] shrink-0" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentView("guardrails")}
+                    className="flex items-center gap-5 py-5 px-2 border-b border-[#e8dfe4] cursor-pointer transition-[background-color,padding] hover:bg-[#fdeef3] hover:px-4 group text-left w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff4d00] focus-visible:ring-inset"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-[#1e2a5c] text-white font-display text-[15px] flex items-center justify-center shrink-0 pt-0.5">3</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-base font-extrabold text-[#1e2a5c]">Security &amp; Guardrails</div>
+                      <div className="text-[13px] text-[#6b7194] mt-0.5">View prompt injection barriers, groundedness validation (0.40 threshold), and sentence claim verification.</div>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-[#9aa0b8] group-hover:text-[#ff4d00] group-hover:translate-x-1 transition-[transform,color] shrink-0" />
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -704,8 +710,8 @@ export default function Home() {
             <div className="flex flex-col gap-6 animate-fadeIn">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl md:text-2xl font-extrabold text-[#0f1717]">Document Library</h2>
-                  <p className="text-xs text-[#647474] mt-1">
+                  <h2 className="text-xl md:text-2xl font-extrabold text-[#232b4a]">Document Library</h2>
+                  <p className="text-xs text-[#6b7194] mt-1">
                     Upload and manage PDF documents. Vectors and caches are strictly bound to document SHA-256.
                   </p>
                 </div>
@@ -744,18 +750,18 @@ export default function Home() {
                     if (e.target.files?.[0]) handleAnalyzeFile(e.target.files[0]);
                   }}
                 />
-                <div className="w-14 h-14 mx-auto rounded-2xl bg-[#e5f0f0] border border-[#a8c9c8] flex items-center justify-center text-[#f45b0b] mb-4 shadow-subtle">
+                <div className="w-14 h-14 mx-auto rounded-2xl bg-[#fdeef3] border border-[#f3b8ca] flex items-center justify-center text-[#ff4d00] mb-4 shadow-subtle">
                   <UploadCloud className="w-7 h-7" />
                 </div>
-                <h3 className="text-sm md:text-base font-bold text-[#0f1717] mb-1">
-                  Drop your PDF here, or <span className="text-[#f45b0b] underline underline-offset-4">browse files</span>
+                <h3 className="text-sm md:text-base font-bold text-[#232b4a] mb-1">
+                  Drop your PDF here, or <span className="text-[#ff4d00] underline underline-offset-4">browse files</span>
                 </h3>
-                <p className="text-xs text-[#647474] max-w-sm mx-auto mb-4">
+                <p className="text-xs text-[#6b7194] max-w-sm mx-auto mb-4">
                   Supports research papers, technical manuals, reports, and whitepapers. Max {MAX_FILE_SIZE_MB}MB, up to {MAX_PDF_PAGES} pages.
                 </p>
                 {analyzeStatus && (
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#e5f0f0] text-[#274141] text-xs font-mono font-bold border border-[#a8c9c8]">
-                    <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#f45b0b]" />
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#fdeef3] text-[#1e2a5c] text-xs font-mono font-bold border border-[#f3b8ca]">
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin text-[#ff4d00]" />
                     <span>{analyzeStatus}</span>
                   </div>
                 )}
@@ -763,9 +769,9 @@ export default function Home() {
 
               {/* Documents Table */}
               <Card padding="p-0" className="overflow-hidden">
-                <div className="p-4 border-b border-[#e4ebeb] flex items-center justify-between bg-[#f8fafa]">
-                  <h3 className="text-sm font-bold text-[#0f1717]">Indexed Documents ({documents.length})</h3>
-                  <span className="text-xs text-[#647474] font-mono">SHA-256 Protected</span>
+                <div className="p-4 border-b border-[#e8dfe4] flex items-center justify-between bg-[#fff9f3]">
+                  <h3 className="text-sm font-bold text-[#232b4a]">Indexed Documents ({documents.length})</h3>
+                  <span className="text-xs text-[#6b7194] font-mono">SHA-256 Protected</span>
                 </div>
                 {documents.length === 0 ? (
                   <div className="p-8">
@@ -781,7 +787,7 @@ export default function Home() {
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs">
-                      <thead className="bg-[#f8fafa] text-[#647474] font-mono border-b border-[#e4ebeb]">
+                      <thead className="bg-[#fff9f3] text-[#6b7194] font-mono border-b border-[#e8dfe4]">
                         <tr>
                           <th className="p-4">Document</th>
                           <th className="p-4">Pages & Chunks</th>
@@ -790,19 +796,19 @@ export default function Home() {
                           <th className="p-4 text-right">Actions</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-[#e4ebeb] text-[#334141]">
+                      <tbody className="divide-y divide-[#e8dfe4] text-[#232b4a]">
                         {documents.map((doc) => {
                           const isActive = activeDoc?.session_id === doc.session_id;
                           return (
-                            <tr key={doc.session_id} className="hover:bg-[#f8fafa] transition-colors">
-                              <td className="p-4 font-bold text-[#0f1717] flex items-center gap-2">
-                                <FileText className="w-4 h-4 text-[#f45b0b] flex-shrink-0" />
+                            <tr key={doc.session_id} className="hover:bg-[#fff9f3] transition-colors">
+                              <td className="p-4 font-bold text-[#232b4a] flex items-center gap-2">
+                                <FileText className="w-4 h-4 text-[#ff4d00] flex-shrink-0" />
                                 <span className="truncate max-w-xs">{doc.filename}</span>
                               </td>
-                              <td className="p-4 font-mono text-[#647474]">
+                              <td className="p-4 font-mono text-[#6b7194]">
                                 {doc.total_pages} pages • {doc.total_chunks} chunks
                               </td>
-                              <td className="p-4 font-mono text-[#647474]">
+                              <td className="p-4 font-mono text-[#6b7194]">
                                 {doc.doc_hash ? `${doc.doc_hash.slice(0, 16)}…` : "sha256"}
                               </td>
                               <td className="p-4">
@@ -841,22 +847,22 @@ export default function Home() {
               {/* Left Column (280px): Document Context & Dynamic Suggestions */}
               <div className="w-full lg:w-72 xl:w-80 h-full flex flex-col gap-4 overflow-y-auto shrink-0 pr-1 scrollbar-thin">
                 <Card className="flex flex-col gap-3">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#647474] font-bold">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#6b7194] font-bold">
                     Active Document
                   </span>
                   {activeDoc ? (
                     <div>
-                      <h3 className="text-sm font-bold text-[#0f1717] truncate" title={activeDoc.filename}>
+                      <h3 className="text-sm font-bold text-[#232b4a] truncate" title={activeDoc.filename}>
                         {activeDoc.filename}
                       </h3>
-                      <p className="text-xs text-[#5a9695] font-mono mt-0.5 font-medium">
+                      <p className="text-xs text-[#2e7d7b] font-mono mt-0.5 font-medium">
                         {activeDoc.total_pages} pages • {activeDoc.total_chunks} chunks indexed
                       </p>
                     </div>
                   ) : (
-                    <div className="text-xs text-[#647474]">
+                    <div className="text-xs text-[#6b7194]">
                       No document selected.{" "}
-                      <button onClick={handleLoadSample} className="text-[#f45b0b] underline font-bold">
+                      <button onClick={handleLoadSample} className="text-[#ff4d00] underline font-bold">
                         Load sample
                       </button>
                     </div>
@@ -866,15 +872,15 @@ export default function Home() {
                 {/* Dynamic Suggested Questions Generated from Active PDF */}
                 <Card className="flex flex-col gap-2">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#647474] font-bold">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#6b7194] font-bold">
                       Suggested Questions
                     </span>
                     {loadingSuggestions && (
-                      <RefreshCw className="w-3 h-3 text-[#f45b0b] animate-spin" />
+                      <RefreshCw className="w-3 h-3 text-[#ff4d00] animate-spin" />
                     )}
                   </div>
                   {suggestions.length === 0 ? (
-                    <div className="text-xs text-[#647474] italic py-3 text-center">
+                    <div className="text-xs text-[#6b7194] italic py-3 text-center">
                       {activeDoc
                         ? loadingSuggestions
                           ? "Generating document-specific questions…"
@@ -887,9 +893,9 @@ export default function Home() {
                         key={idx}
                         onClick={() => handleAsk(sq)}
                         disabled={asking || !activeDoc}
-                        className="text-left p-2.5 rounded-xl bg-[#f8fafa] hover:bg-[#e5f0f0] border border-[#e4ebeb] hover:border-[#a8c9c8] text-xs text-[#334141] hover:text-[#0f1717] font-medium transition-all disabled:opacity-50 flex items-start gap-2 group"
+                        className="text-left p-2.5 rounded-xl bg-[#fff9f3] hover:bg-[#fdeef3] border border-[#e8dfe4] hover:border-[#f3b8ca] text-xs text-[#232b4a] hover:text-[#232b4a] font-medium transition-all disabled:opacity-50 flex items-start gap-2 group"
                       >
-                        <HelpCircle className="w-3.5 h-3.5 text-[#5a9695] group-hover:text-[#f45b0b] flex-shrink-0 mt-0.5 transition-colors" />
+                        <HelpCircle className="w-3.5 h-3.5 text-[#2e7d7b] group-hover:text-[#ff4d00] flex-shrink-0 mt-0.5 transition-colors" />
                         <span className="leading-snug">{sq}</span>
                       </button>
                     ))
@@ -898,41 +904,41 @@ export default function Home() {
 
                 {/* Guardrails Active Status */}
                 <Card className="flex flex-col gap-2 text-xs font-mono">
-                  <span className="text-[10px] uppercase tracking-wider text-[#647474] font-bold">Guardrails Active</span>
-                  <div className="flex items-center justify-between text-[#647474]">
+                  <span className="text-[10px] uppercase tracking-wider text-[#6b7194] font-bold">Guardrails Active</span>
+                  <div className="flex items-center justify-between text-[#6b7194]">
                     <span>Groundedness Gate:</span>
-                    <span className="text-[#274141] font-bold">≥ {RELEVANCE_GATE}</span>
+                    <span className="text-[#1e2a5c] font-bold">≥ {RELEVANCE_GATE}</span>
                   </div>
-                  <div className="flex items-center justify-between text-[#647474]">
+                  <div className="flex items-center justify-between text-[#6b7194]">
                     <span>Claim Check:</span>
-                    <span className="text-[#f45b0b] font-bold">Sentence Level</span>
+                    <span className="text-[#ff4d00] font-bold">Sentence Level</span>
                   </div>
-                  <div className="flex items-center justify-between text-[#647474]">
+                  <div className="flex items-center justify-between text-[#6b7194]">
                     <span>Semantic Cache:</span>
-                    <span className="text-[#375f5f] font-bold">Dual-Tier L1+L2</span>
+                    <span className="text-[#1e2a5c] font-bold">Dual-Tier L1+L2</span>
                   </div>
                 </Card>
               </div>
 
               {/* Center Column: Fixed-Height Conversation Thread */}
-              <div className="flex-1 min-h-0 h-full flex flex-col bg-white rounded-2xl border border-[#a8c9c8] shadow-subtle overflow-hidden relative">
+              <div className="flex-1 min-h-0 h-full flex flex-col bg-white rounded-2xl border border-[#f3b8ca] shadow-subtle overflow-hidden relative">
                 {/* Chat Top Header */}
-                <div className="shrink-0 p-3.5 md:p-4 border-b border-[#e4ebeb] flex items-center justify-between bg-[#f8fafa]">
+                <div className="shrink-0 p-3.5 md:p-4 border-b border-[#e8dfe4] flex items-center justify-between bg-[#fff9f3]">
                   <div className="flex items-center gap-2">
-                    <Bot className="w-4 h-4 text-[#f45b0b]" />
-                    <span className="text-xs md:text-sm font-bold text-[#0f1717]">Knowlix Document Studio</span>
+                    <Bot className="w-4 h-4 text-[#ff4d00]" />
+                    <span className="text-xs md:text-sm font-bold text-[#232b4a]">Knowlix Document Studio</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setChat([])}
-                      className="text-xs text-[#647474] hover:text-[#0f1717] transition-colors"
+                      className="text-xs text-[#6b7194] hover:text-[#232b4a] transition-colors"
                       title="Clear chat history"
                     >
                       Clear history
                     </button>
                     <button
                       onClick={() => setRightPanelOpen(!rightPanelOpen)}
-                      className="text-xs text-[#375f5f] hover:text-[#0f1717] font-semibold transition-colors ml-2 hidden lg:inline"
+                      className="text-xs text-[#1e2a5c] hover:text-[#232b4a] font-semibold transition-colors ml-2 hidden lg:inline"
                     >
                       {rightPanelOpen ? "Hide Sources" : "Show Sources"}
                     </button>
@@ -953,28 +959,28 @@ export default function Home() {
                 <div
                   ref={messagesContainerRef}
                   onScroll={handleMessagesScroll}
-                  className="flex-1 min-h-0 overflow-y-auto p-4 md:p-6 flex flex-col gap-4 bg-[#fdfefe] overscroll-contain"
+                  className="flex-1 min-h-0 overflow-y-auto p-4 md:p-6 flex flex-col gap-4 bg-[#fff9f3] overscroll-contain"
                 >
                   {chat.length === 0 ? (
                     <div className="m-auto text-center max-w-md py-8">
-                      <div className="w-12 h-12 mx-auto rounded-2xl bg-[#e5f0f0] border border-[#a8c9c8] flex items-center justify-center text-[#f45b0b] mb-3 shadow-subtle">
+                      <div className="w-12 h-12 mx-auto rounded-2xl bg-[#fdeef3] border border-[#f3b8ca] flex items-center justify-center text-[#ff4d00] mb-3 shadow-subtle">
                         <Sparkles className="w-6 h-6" />
                       </div>
-                      <h4 className="text-base font-bold text-[#0f1717] mb-1">
+                      <h4 className="text-base font-bold text-[#232b4a] mb-1">
                         Ask Anything About This Document
                       </h4>
-                      <p className="text-xs text-[#647474] leading-relaxed mb-4">
+                      <p className="text-xs text-[#6b7194] leading-relaxed mb-4">
                         Knowlix verifies answers against real document pages and caches semantically equivalent questions for instantaneous responses.
                       </p>
                       {suggestions.length > 0 && (
                         <div className="flex flex-col gap-2 text-left">
-                          <span className="text-[11px] font-mono text-[#647474] text-center mb-1">Try one of these:</span>
+                          <span className="text-[11px] font-mono text-[#6b7194] text-center mb-1">Try one of these:</span>
                           {suggestions.slice(0, 3).map((sq, idx) => (
                             <button
                               key={idx}
                               onClick={() => handleAsk(sq)}
                               disabled={!activeDoc || asking}
-                              className="text-xs text-[#274141] hover:text-[#0f1717] bg-[#f8fafa] hover:bg-[#e5f0f0] p-2.5 rounded-xl border border-[#e4ebeb] hover:border-[#a8c9c8] text-left transition-all"
+                              className="text-xs text-[#1e2a5c] hover:text-[#232b4a] bg-[#fff9f3] hover:bg-[#fdeef3] p-2.5 rounded-xl border border-[#e8dfe4] hover:border-[#f3b8ca] text-left transition-all"
                             >
                               • {sq}
                             </button>
@@ -998,7 +1004,7 @@ export default function Home() {
                           <div className="chat-bubble-assistant w-full max-w-full md:max-w-[95%] flex flex-col gap-3 break-words [overflow-wrap:anywhere]">
                             {/* Cache Telemetry Header */}
                             {msg.cache_performance && (
-                              <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#e4ebeb]">
+                              <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#e8dfe4]">
                                 <div className="flex flex-wrap items-center gap-2">
                                   {msg.cache_performance.cache_hit ? (
                                     msg.cache_performance.cache_type === "exact" ? (
@@ -1019,12 +1025,12 @@ export default function Home() {
                                       RAG COMPUTATION ({msg.cache_performance.latency_ms > 0 ? `${msg.cache_performance.latency_ms}ms` : "< 1ms"} • Stored in Cache)
                                     </Badge>
                                   )}
-                                  <span className="text-[11px] font-mono text-[#647474]">
+                                  <span className="text-[11px] font-mono text-[#6b7194]">
                                     {msg.model_used || "Groq gpt-oss-120b"}
                                   </span>
                                 </div>
                                 {msg.cache_performance.cache_hit && (
-                                  <span className="text-[10px] font-mono text-[#274141] font-bold bg-[#e5f0f0] px-2 py-0.5 rounded border border-[#a8c9c8]">
+                                  <span className="text-[10px] font-mono text-[#1d4f4e] font-bold bg-[#dcebe9] px-2 py-0.5 rounded border border-[#5fa8a6]">
                                     Zero LLM Overhead
                                   </span>
                                 )}
@@ -1032,13 +1038,13 @@ export default function Home() {
                             )}
 
                             {/* Answer Text */}
-                            <div className="text-xs md:text-sm text-[#0f1717] leading-relaxed whitespace-pre-wrap font-sans break-words [overflow-wrap:anywhere]">
+                            <div className="text-xs md:text-sm text-[#232b4a] leading-relaxed whitespace-pre-wrap font-sans break-words [overflow-wrap:anywhere]">
                               {stripSupportLine(msg.content)}
                             </div>
 
                             {msg.refused && (
-                              <div className="mt-2.5 pt-2.5 border-t border-dashed border-[#e4ebeb] text-xs text-[#647474] flex items-start gap-1.5 bg-[#fbfdfd] p-2 rounded-lg">
-                                <Info className="w-3.5 h-3.5 text-[#5a9695] shrink-0 mt-0.5" />
+                              <div className="mt-2.5 pt-2.5 border-t border-dashed border-[#e8dfe4] text-xs text-[#6b7194] flex items-start gap-1.5 bg-[#fff9f3] p-2 rounded-lg">
+                                <Info className="w-3.5 h-3.5 text-[#2e7d7b] shrink-0 mt-0.5" />
                                 <span>
                                   This query scored below the groundedness gate (≥ 0.40) or had no backing claims in the document. Try asking an overview question (e.g. <em>&quot;What is this document about?&quot;</em>) or select from the suggested questions in the left panel.
                                 </span>
@@ -1047,8 +1053,8 @@ export default function Home() {
 
                             {/* Citations & Source Page Pills (Teal Spotlight) */}
                             {msg.citations && msg.citations.length > 0 && (
-                              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#e4ebeb]">
-                                <span className="text-xs text-[#647474] font-mono font-medium">Sources:</span>
+                              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#e8dfe4]">
+                                <span className="text-xs text-[#6b7194] font-mono font-medium">Sources:</span>
                                 {msg.citations.map((p) => (
                                   <button
                                     key={p}
@@ -1058,7 +1064,7 @@ export default function Home() {
                                     Page {p}
                                   </button>
                                 ))}
-                                <span className="text-[11px] font-mono text-[#274141] font-bold ml-auto bg-[#e5f0f0] px-2 py-0.5 rounded border border-[#a8c9c8]">
+                                <span className="text-[11px] font-mono text-[#1d4f4e] font-bold ml-auto bg-[#dcebe9] px-2 py-0.5 rounded border border-[#5fa8a6]">
                                   ✓ Grounded in Document
                                 </span>
                               </div>
@@ -1071,9 +1077,9 @@ export default function Home() {
 
                   {asking && (
                     <div className="flex flex-col items-start w-full animate-fadeIn">
-                      <div className="chat-bubble-assistant flex items-center gap-3 py-3 px-4 rounded-2xl bg-white border border-[#a8c9c8]">
-                        <div className="w-4 h-4 rounded-full border-2 border-[#f45b0b] border-t-transparent animate-spin flex-shrink-0" />
-                        <span className="text-xs text-[#274141] font-mono font-medium">
+                      <div className="chat-bubble-assistant flex items-center gap-3 py-3 px-4 rounded-2xl bg-white border border-[#f3b8ca]">
+                        <div className="w-4 h-4 rounded-full border-2 border-[#ff4d00] border-t-transparent animate-spin flex-shrink-0" />
+                        <span className="text-xs text-[#1e2a5c] font-mono font-medium">
                           Querying ONNX embeddings & evaluating semantic cache…
                         </span>
                       </div>
@@ -1086,18 +1092,18 @@ export default function Home() {
                 {!isAtBottom && (
                   <button
                     onClick={() => scrollToBottom(true)}
-                    className="absolute bottom-24 right-6 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#a8c9c8] shadow-card-hover text-xs font-semibold text-[#0f1717] hover:bg-[#e5f0f0] transition-all"
+                    className="absolute bottom-24 right-6 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#f3b8ca] shadow-card-hover text-xs font-semibold text-[#232b4a] hover:bg-[#fdeef3] transition-all"
                   >
-                    <ArrowDown className="w-3.5 h-3.5 text-[#f45b0b]" />
+                    <ArrowDown className="w-3.5 h-3.5 text-[#ff4d00]" />
                     <span>Scroll to latest</span>
                     {hasNewMessagesWhileScrolledUp && (
-                      <span className="w-2 h-2 rounded-full bg-[#f45b0b] animate-pulse" />
+                      <span className="w-2 h-2 rounded-full bg-[#ff4d00] animate-pulse" />
                     )}
                   </button>
                 )}
 
                 {/* Fixed Modern Composer Input Bar */}
-                <div className="shrink-0 p-3 md:p-4 border-t border-[#e4ebeb] bg-white relative shadow-[0_-4px_16px_rgba(0,0,0,0.03)]">
+                <div className="shrink-0 p-3 md:p-4 border-t border-[#e8dfe4] bg-white relative shadow-[0_-4px_16px_rgba(0,0,0,0.03)]">
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -1105,7 +1111,7 @@ export default function Home() {
                     }}
                     className="flex items-end gap-2.5"
                   >
-                    <div className="flex-1 relative rounded-xl border border-[#cbdada] focus-within:border-[#f45b0b] focus-within:ring-2 focus-within:ring-[#f45b0b]/20 bg-[#f8fafa] focus-within:bg-white transition-all">
+                    <div className="flex-1 relative rounded-xl border border-[#e8dfe4] focus-within:border-[#ff4d00] focus-within:ring-2 focus-within:ring-[#ff4d00]/20 bg-[#fff9f3] focus-within:bg-white transition-all">
                       <textarea
                         ref={textareaRef}
                         rows={1}
@@ -1131,12 +1137,12 @@ export default function Home() {
                             : "Ask anything about this document…"
                         }
                         disabled={!activeDoc || asking || activeDoc.chunk_count === 0}
-                        className="w-full resize-none bg-transparent px-3.5 py-2.5 text-xs md:text-sm text-[#0f1717] placeholder-[#94a3a3] outline-none max-h-32 min-h-[42px] leading-relaxed scrollbar-thin"
+                        className="w-full resize-none bg-transparent px-3.5 py-2.5 text-xs md:text-sm text-[#232b4a] placeholder-[#9aa0b8] outline-none max-h-32 min-h-[42px] leading-relaxed scrollbar-thin"
                       />
                     </div>
                     <Button
                       type="submit"
-                      variant="primary"
+                      variant="secondary"
                       size="md"
                       disabled={!activeDoc || asking || !question.trim() || activeDoc.chunk_count === 0}
                       icon={ArrowRight}
@@ -1145,7 +1151,7 @@ export default function Home() {
                       Ask
                     </Button>
                   </form>
-                  <div className="flex items-center justify-between mt-1.5 px-1 text-[11px] text-[#94a3a3] font-mono">
+                  <div className="flex items-center justify-between mt-1.5 px-1 text-[11px] text-[#9aa0b8] font-mono">
                     <span>↵ to send • Shift+↵ for new line</span>
                     <span className="hidden sm:inline">Grounding: Page-level citations verified</span>
                   </div>
@@ -1154,18 +1160,18 @@ export default function Home() {
 
               {/* Right Column (320px): Source Inspector */}
               {rightPanelOpen && (
-                <Card className="w-full lg:w-72 xl:w-80 h-full flex flex-col gap-4 overflow-y-auto shrink-0 pl-1 border-[#a8c9c8]">
-                  <div className="flex items-center justify-between pb-2 border-b border-[#e4ebeb]">
-                    <span className="text-xs font-bold text-[#0f1717] flex items-center gap-1.5">
-                      <Eye className="w-4 h-4 text-[#f45b0b]" /> Source Inspector
+                <Card className="w-full lg:w-72 xl:w-80 h-full flex flex-col gap-4 overflow-y-auto shrink-0 pl-1 border-[#f3b8ca]">
+                  <div className="flex items-center justify-between pb-2 border-b border-[#e8dfe4]">
+                    <span className="text-xs font-bold text-[#232b4a] flex items-center gap-1.5">
+                      <Eye className="w-4 h-4 text-[#ff4d00]" /> Source Inspector
                     </span>
-                    <span className="text-[10px] font-mono text-[#274141] bg-[#e5f0f0] px-2 py-0.5 rounded font-bold">
+                    <span className="text-[10px] font-mono text-[#1d4f4e] bg-[#dcebe9] px-2 py-0.5 rounded font-bold">
                       {activeCitationPage ? `Page ${activeCitationPage}` : "All citations"}
                     </span>
                   </div>
 
                   {chat.length === 0 || !chat[chat.length - 1]?.source_chunks ? (
-                    <div className="p-8 text-center text-[#647474] text-xs">
+                    <div className="p-8 text-center text-[#6b7194] text-xs">
                       Ask a question to inspect retrieved source excerpts and sentence claim support.
                     </div>
                   ) : (
@@ -1175,17 +1181,17 @@ export default function Home() {
                         .map((chunk, idx) => (
                           <div
                             key={idx}
-                            className="p-3 rounded-xl bg-[#f8fafa] border border-[#a8c9c8] flex flex-col gap-1.5 text-xs shadow-subtle"
+                            className="p-3 rounded-xl bg-[#dcebe9] border border-[#5fa8a6] flex flex-col gap-1.5 text-xs shadow-subtle"
                           >
                             <div className="flex items-center justify-between">
-                              <span className="font-mono text-[#f45b0b] font-bold">
+                              <span className="font-mono text-[#ff4d00] font-bold">
                                 Page {chunk.page}
                               </span>
-                              <span className="text-[10px] font-mono text-[#274141] font-bold bg-[#e5f0f0] px-1.5 py-0.2 rounded border border-[#a8c9c8]">
+                              <span className="text-[10px] font-mono text-[#1d4f4e] font-bold bg-[#dcebe9] px-1.5 py-0.2 rounded border border-[#5fa8a6]">
                                 Score: {(chunk.score || 0.85).toFixed(2)}
                               </span>
                             </div>
-                            <p className="text-[#334141] text-[11px] leading-relaxed italic">
+                            <p className="text-[#232b4a] text-[11px] leading-relaxed italic">
                               "{truncate(chunk.text, 220)}"
                             </p>
                           </div>
@@ -1202,8 +1208,8 @@ export default function Home() {
             <div className="flex flex-col gap-6 animate-fadeIn">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl md:text-2xl font-extrabold text-[#0f1717]">Semantic Cache Engine</h2>
-                  <p className="text-xs text-[#647474] mt-1">
+                  <h2 className="text-xl md:text-2xl font-extrabold text-[#232b4a]">Semantic Cache Engine</h2>
+                  <p className="text-xs text-[#6b7194] mt-1">
                     Dual-tier cache: L1 Exact Match (Redis/Memory) + L2 Cosine Vector Similarity (FAISS IndexIDMap2).
                   </p>
                 </div>
@@ -1229,46 +1235,46 @@ export default function Home() {
 
               {/* Benchmark Results Card */}
               {benchmarkResult && (
-                <Card className="border-[#a8c9c8] flex flex-col gap-4">
+                <Card className="border-[#f3b8ca] flex flex-col gap-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#0f1717] flex items-center gap-2">
-                      <Zap className="w-4 h-4 text-[#f45b0b]" /> 3-Mode Performance Benchmark Comparison
+                    <span className="text-xs font-bold text-[#232b4a] flex items-center gap-2">
+                      <Zap className="w-4 h-4 text-[#ff4d00]" /> 3-Mode Performance Benchmark Comparison
                     </span>
-                    <span className="text-[10px] font-mono text-[#274141] bg-[#e5f0f0] px-2 py-0.5 rounded font-bold border border-[#a8c9c8]">
+                    <span className="text-[10px] font-mono text-[#1d4f4e] bg-[#dcebe9] px-2 py-0.5 rounded font-bold border border-[#5fa8a6]">
                       Speedup: {benchmarkResult.semantic_speedup_factor}x faster
                     </span>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Mode A */}
-                    <div className="p-4 rounded-xl bg-[#fef5f0] border border-[rgba(244,91,11,0.25)] flex flex-col gap-1">
-                      <span className="text-xs text-[#dc4805] font-mono font-bold">Mode A: Baseline RAG</span>
-                      <span className="text-xl font-bold font-mono text-[#b73507]">
+                    <div className="p-4 rounded-xl bg-[#fff1e8] border border-[rgba(244,91,11,0.25)] flex flex-col gap-1">
+                      <span className="text-xs text-[#e04400] font-mono font-bold">Mode A: Baseline RAG</span>
+                      <span className="text-xl font-bold font-mono text-[#b23400]">
                         {(benchmarkResult.mode_a_baseline?.avg_latency_ms ?? benchmarkResult.mode_a_baseline_rag?.avg_latency_ms ?? 1250).toFixed(0)} ms
                       </span>
-                      <span className="text-[11px] text-[#647474] font-mono">
+                      <span className="text-[11px] text-[#6b7194] font-mono">
                         {benchmarkResult.mode_a_baseline?.llm_calls ?? 4} LLM calls (full compute)
                       </span>
                     </div>
 
                     {/* Mode B */}
-                    <div className="p-4 rounded-xl bg-[#e5f0f0] border border-[#a8c9c8] flex flex-col gap-1">
-                      <span className="text-xs text-[#274141] font-mono font-bold">Mode B: Exact Cache</span>
-                      <span className="text-xl font-bold font-mono text-[#274141]">
+                    <div className="p-4 rounded-xl bg-[#dcebe9] border border-[#5fa8a6] flex flex-col gap-1">
+                      <span className="text-xs text-[#1d4f4e] font-mono font-bold">Mode B: Exact Cache</span>
+                      <span className="text-xl font-bold font-mono text-[#1e2a5c]">
                         {(benchmarkResult.mode_b_exact?.avg_latency_ms ?? benchmarkResult.mode_b_exact_cache?.avg_latency_ms ?? 0.8).toFixed(1)} ms
                       </span>
-                      <span className="text-[11px] text-[#375f5f] font-mono font-medium">
+                      <span className="text-[11px] text-[#1e2a5c] font-mono font-medium">
                         {benchmarkResult.mode_b_exact?.cache_hits ?? 1} hits (100% saved)
                       </span>
                     </div>
 
                     {/* Mode C */}
-                    <div className="p-4 rounded-xl bg-[#f3f8f8] border border-[#86b3b2] flex flex-col gap-1">
-                      <span className="text-xs text-[#274141] font-mono font-bold">Mode C: Semantic Cache</span>
-                      <span className="text-xl font-bold font-mono text-[#274141]">
+                    <div className="p-4 rounded-xl bg-[#dcebe9] border border-[#5fa8a6] flex flex-col gap-1">
+                      <span className="text-xs text-[#1d4f4e] font-mono font-bold">Mode C: Semantic Cache</span>
+                      <span className="text-xl font-bold font-mono text-[#1e2a5c]">
                         {(benchmarkResult.mode_c_semantic?.avg_latency_ms ?? benchmarkResult.mode_c_semantic_cache?.avg_latency_ms ?? 24).toFixed(1)} ms
                       </span>
-                      <span className="text-[11px] text-[#f45b0b] font-mono font-bold">
+                      <span className="text-[11px] text-[#ff4d00] font-mono font-bold">
                         {benchmarkResult.mode_c_semantic?.tokens_saved ?? 600} tokens saved
                       </span>
                     </div>
@@ -1278,8 +1284,8 @@ export default function Home() {
 
               {/* Cache Entries Table */}
               <Card padding="p-0" className="overflow-hidden">
-                <div className="p-4 border-b border-[#e4ebeb] flex items-center justify-between bg-[#f8fafa]">
-                  <h3 className="text-sm font-bold text-[#0f1717]">Active Cache Entries ({cacheEntries.length})</h3>
+                <div className="p-4 border-b border-[#e8dfe4] flex items-center justify-between bg-[#fff9f3]">
+                  <h3 className="text-sm font-bold text-[#232b4a]">Active Cache Entries ({cacheEntries.length})</h3>
                   <div className="w-56">
                     <Input
                       placeholder="Filter questions…"
@@ -1302,7 +1308,7 @@ export default function Home() {
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs">
-                      <thead className="bg-[#f8fafa] text-[#647474] font-mono border-b border-[#e4ebeb]">
+                      <thead className="bg-[#fff9f3] text-[#6b7194] font-mono border-b border-[#e8dfe4]">
                         <tr>
                           <th className="p-4">Cached Query</th>
                           <th className="p-4">Hits</th>
@@ -1311,15 +1317,15 @@ export default function Home() {
                           <th className="p-4 text-right">Invalidate</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-[#e4ebeb] text-[#334141] font-mono">
+                      <tbody className="divide-y divide-[#e8dfe4] text-[#232b4a] font-mono">
                         {cacheEntries.map((entry) => (
-                          <tr key={entry.entry_id} className="hover:bg-[#f8fafa] transition-colors">
-                            <td className="p-4 font-sans font-semibold text-[#0f1717] max-w-sm truncate">
+                          <tr key={entry.entry_id} className="hover:bg-[#fff9f3] transition-colors">
+                            <td className="p-4 font-sans font-semibold text-[#232b4a] max-w-sm truncate">
                               {entry.normalized_query || entry.query_text}
                             </td>
-                            <td className="p-4 text-[#274141] font-bold">{entry.hit_count}</td>
-                            <td className="p-4 text-[#f45b0b] font-bold">{entry.tokens_saved ?? (entry.hit_count * 150)}</td>
-                            <td className="p-4 text-[#647474]">{entry.doc_hash?.slice(0, 12)}…</td>
+                            <td className="p-4 text-[#1e2a5c] font-bold">{entry.hit_count}</td>
+                            <td className="p-4 text-[#ff4d00] font-bold">{entry.tokens_saved ?? (entry.hit_count * 150)}</td>
+                            <td className="p-4 text-[#6b7194]">{entry.doc_hash?.slice(0, 12)}…</td>
                             <td className="p-4 text-right">
                               <button
                                 onClick={() => handleDeleteEntry(entry.entry_id)}
@@ -1343,41 +1349,41 @@ export default function Home() {
           {currentView === "analytics" && (
             <div className="flex flex-col gap-6 animate-fadeIn">
               <div>
-                <h2 className="text-xl md:text-2xl font-extrabold text-[#0f1717]">Performance Analytics & Latency Radar</h2>
-                <p className="text-xs text-[#647474] mt-1">
+                <h2 className="text-xl md:text-2xl font-extrabold text-[#232b4a]">Performance Analytics & Latency Radar</h2>
+                <p className="text-xs text-[#6b7194] mt-1">
                   Telemetry tracking query throughput, latency distribution, and cost reductions.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <Card className="flex flex-col gap-3">
-                  <span className="text-xs font-bold text-[#647474]">Throughput Summary</span>
-                  <div className="text-3xl font-extrabold font-mono text-[#0f1717]">
+                  <span className="text-xs font-bold text-[#6b7194]">Throughput Summary</span>
+                  <div className="text-3xl font-extrabold font-mono text-[#232b4a]">
                     {(cacheStats?.total_queries || 0)}
                   </div>
-                  <span className="text-xs text-[#647474]">Total Queries Evaluated</span>
-                  <div className="w-full bg-[#e5f0f0] h-2.5 rounded-full overflow-hidden mt-2">
+                  <span className="text-xs text-[#6b7194]">Total Queries Evaluated</span>
+                  <div className="w-full bg-[#fdeef3] h-2.5 rounded-full overflow-hidden mt-2">
                     <div
-                      className="bg-[#f45b0b] h-full"
+                      className="bg-[#ff4d00] h-full"
                       style={{ width: `${(cacheStats?.hit_rate || 0) * 100}%` }}
                     />
                   </div>
                 </Card>
 
                 <Card className="flex flex-col gap-3">
-                  <span className="text-xs font-bold text-[#647474]">Net Token Savings</span>
-                  <div className="text-3xl font-extrabold font-mono text-[#f45b0b]">
+                  <span className="text-xs font-bold text-[#6b7194]">Net Token Savings</span>
+                  <div className="text-3xl font-extrabold font-mono text-[#ff4d00]">
                     {(cacheStats?.estimated_tokens_saved ?? cacheStats?.tokens_saved ?? 0).toLocaleString()}
                   </div>
-                  <span className="text-xs text-[#647474]">Tokens Saved vs Groq gpt-oss-120b</span>
+                  <span className="text-xs text-[#6b7194]">Tokens Saved vs Groq gpt-oss-120b</span>
                 </Card>
 
                 <Card className="flex flex-col gap-3">
-                  <span className="text-xs font-bold text-[#647474]">Estimated Cost Reduction</span>
-                  <div className="text-3xl font-extrabold font-mono text-[#274141]">
+                  <span className="text-xs font-bold text-[#6b7194]">Estimated Cost Reduction</span>
+                  <div className="text-3xl font-extrabold font-mono text-[#1e2a5c]">
                     ${(cacheStats?.estimated_cost_saved_usd ?? cacheStats?.estimated_cost_saved ?? 0).toFixed(4)}
                   </div>
-                  <span className="text-xs text-[#647474]">Saved at $0.70/1M tokens</span>
+                  <span className="text-xs text-[#6b7194]">Saved at $0.70/1M tokens</span>
                 </Card>
               </div>
             </div>
@@ -1387,45 +1393,45 @@ export default function Home() {
           {currentView === "guardrails" && (
             <div className="flex flex-col gap-6 animate-fadeIn">
               <div>
-                <h2 className="text-xl md:text-2xl font-extrabold text-[#0f1717]">Security Architecture & Guardrails</h2>
-                <p className="text-xs text-[#647474] mt-1">
+                <h2 className="text-xl md:text-2xl font-extrabold text-[#232b4a]">Security Architecture & Guardrails</h2>
+                <p className="text-xs text-[#6b7194] mt-1">
                   Knowlix applies four consecutive defense layers to prevent prompt injection and hallucinations.
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Card className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2 text-[#274141] font-bold text-sm">
-                    <ShieldCheck className="w-4 h-4 text-[#f45b0b]" /> Layer 1: Prompt Injection Sanitization
+                  <div className="flex items-center gap-2 text-[#1e2a5c] font-bold text-sm">
+                    <ShieldCheck className="w-4 h-4 text-[#ff4d00]" /> Layer 1: Prompt Injection Sanitization
                   </div>
-                  <p className="text-xs text-[#647474] leading-relaxed">
+                  <p className="text-xs text-[#6b7194] leading-relaxed">
                     Strips instruction overrides, system-prompt exploits, and jailbreak delimiters before embeddings or LLM inference.
                   </p>
                 </Card>
 
                 <Card className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2 text-[#274141] font-bold text-sm">
-                    <Filter className="w-4 h-4 text-[#5a9695]" /> Layer 2: Relevance Retrieval Gate
+                  <div className="flex items-center gap-2 text-[#1e2a5c] font-bold text-sm">
+                    <Filter className="w-4 h-4 text-[#2e7d7b]" /> Layer 2: Relevance Retrieval Gate
                   </div>
-                  <p className="text-xs text-[#647474] leading-relaxed">
+                  <p className="text-xs text-[#6b7194] leading-relaxed">
                     Enforces strict minimum cosine retrieval threshold (0.40). Queries outside document scope are rejected before LLM invocation.
                   </p>
                 </Card>
 
                 <Card className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2 text-[#274141] font-bold text-sm">
-                    <FileCode className="w-4 h-4 text-[#f45b0b]" /> Layer 3: Groundedness Validation
+                  <div className="flex items-center gap-2 text-[#1e2a5c] font-bold text-sm">
+                    <FileCode className="w-4 h-4 text-[#ff4d00]" /> Layer 3: Groundedness Validation
                   </div>
-                  <p className="text-xs text-[#647474] leading-relaxed">
+                  <p className="text-xs text-[#6b7194] leading-relaxed">
                     Verifies answers strictly match document citations. Extractive fallback executes automatically if generative drift is detected.
                   </p>
                 </Card>
 
                 <Card className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2 text-[#274141] font-bold text-sm">
-                    <CheckCircle2 className="w-4 h-4 text-[#5a9695]" /> Layer 4: Sentence-Level Claim Check
+                  <div className="flex items-center gap-2 text-[#1e2a5c] font-bold text-sm">
+                    <CheckCircle2 className="w-4 h-4 text-[#2e7d7b]" /> Layer 4: Sentence-Level Claim Check
                   </div>
-                  <p className="text-xs text-[#647474] leading-relaxed">
+                  <p className="text-xs text-[#6b7194] leading-relaxed">
                     Evaluates individual sentence claims against source text chunks (minimum support ratio 0.34) before returning output.
                   </p>
                 </Card>
@@ -1437,19 +1443,19 @@ export default function Home() {
           {currentView === "settings" && (
             <div className="flex flex-col gap-6 animate-fadeIn max-w-2xl">
               <div>
-                <h2 className="text-xl md:text-2xl font-extrabold text-[#0f1717]">System Settings</h2>
-                <p className="text-xs text-[#647474] mt-1">
+                <h2 className="text-xl md:text-2xl font-extrabold text-[#232b4a]">System Settings</h2>
+                <p className="text-xs text-[#6b7194] mt-1">
                   Configure semantic similarity thresholds, cache TTLs, and backend connection parameters.
                 </p>
               </div>
 
-              <Card className="flex flex-col gap-5 border-[#a8c9c8]">
+              <Card className="flex flex-col gap-5 border-[#f3b8ca]">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-[#0f1717]">
+                    <label className="text-xs font-bold text-[#232b4a]">
                       Semantic Similarity Threshold
                     </label>
-                    <span className="text-xs font-mono font-bold text-[#f45b0b] bg-[#fef5f0] px-2 py-0.5 rounded border border-[rgba(244,91,11,0.25)]">
+                    <span className="text-xs font-mono font-bold text-[#ff4d00] bg-[#fff1e8] px-2 py-0.5 rounded border border-[rgba(244,91,11,0.25)]">
                       {cacheSettings?.similarity_threshold || 0.88}
                     </span>
                   </div>
@@ -1464,17 +1470,17 @@ export default function Home() {
                       setCacheSettings((prev) => ({ ...prev, similarity_threshold: val }));
                       updateCacheSettings({ similarity_threshold: val });
                     }}
-                    className="w-full accent-[#f45b0b] cursor-pointer"
+                    className="w-full accent-[#ff4d00] cursor-pointer"
                   />
-                  <span className="text-[11px] text-[#647474]">
+                  <span className="text-[11px] text-[#6b7194]">
                     Lower values increase semantic rephrase hit rate (0.70-0.78 recommended for MiniLM embeddings); higher values require near-identical wording. Default is 0.75.
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-[#e4ebeb] flex items-center justify-between">
+                <div className="pt-4 border-t border-[#e8dfe4] flex items-center justify-between">
                   <div>
-                    <div className="text-xs font-bold text-[#0f1717]">Flush Semantic Cache</div>
-                    <div className="text-[11px] text-[#647474]">
+                    <div className="text-xs font-bold text-[#232b4a]">Flush Semantic Cache</div>
+                    <div className="text-[11px] text-[#6b7194]">
                       Invalidates all Redis keys and empties the FAISS vector index.
                     </div>
                   </div>

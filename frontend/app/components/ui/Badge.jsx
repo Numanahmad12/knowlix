@@ -13,14 +13,14 @@ export function Badge({
   }[size] || "text-xs px-2.5 py-1";
 
   const variantStyles = {
-    // Teal & White brand pairings
-    default: "bg-[#f3f8f8] text-[#274141] border border-[#a8c9c8]",
-    exact: "bg-[#e5f0f0] text-[#274141] border border-[#a8c9c8]",
-    semantic: "bg-[#f3f8f8] text-[#375f5f] border border-[#86b3b2]",
-    // Orange brand accents
-    miss: "bg-[#fef5f0] text-[#dc4805] border border-[rgba(244,91,11,0.35)]",
-    orange: "bg-[#f45b0b] text-white border border-[#dc4805]",
-    mono: "font-mono bg-[#f3f8f8] text-[#274141] border border-[#a8c9c8]",
+    // Direction 4: pink-soft default, teal for cache semantics, orange for miss
+    default: "bg-[#fdeef3] text-[#1e2a5c] border border-[#f3b8ca]",
+    exact: "bg-[#dcebe9] text-[#1d4f4e] border border-[#5fa8a6]",
+    semantic: "bg-[#eef6f5] text-[#1d4f4e] border border-[#2e7d7b]",
+    // Orange accents
+    miss: "bg-[#fff1e8] text-[#e04400] border border-[rgba(255,77,0,0.4)]",
+    orange: "bg-[#ff4d00] text-white border border-[#e04400]",
+    mono: "font-mono bg-[#fdeef3] text-[#1e2a5c] border border-[#f3b8ca]",
   }[variant] || "";
 
   return (

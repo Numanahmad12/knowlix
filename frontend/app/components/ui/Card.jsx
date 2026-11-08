@@ -11,9 +11,9 @@ export function Card({
   return (
     <div
       onClick={onClick}
-      className={`rounded-2xl border border-[#e4ebeb] bg-white shadow-card ${
+      className={`rounded-2xl border border-[#e8dfe4] bg-white shadow-card ${
         hoverable
-          ? "hover:border-[#a8c9c8] hover:shadow-card-hover transition-all duration-200 cursor-pointer"
+          ? "hover:border-[#f3b8ca] hover:shadow-card-hover transition-[border-color,box-shadow] duration-200 cursor-pointer"
           : ""
       } ${padding} ${className}`}
       {...props}
