@@ -4,6 +4,7 @@ export const metadata = {
   title: "Knowlix — Enterprise AI Document Intelligence & Semantic Caching",
   description:
     "Next-generation PDF intelligence platform powered by ONNX embeddings, FAISS hybrid retrieval, Groq LLM, and document-aware semantic caching.",
+  icons: { icon: "/icon.svg" },
 };
 
 export default function RootLayout({ children }) {

@@ -376,7 +376,7 @@ export default function Home() {
         citations: result.citations || [],
         source_chunks: result.chunks || [],
         retrieval_status: result.retrieval_label || "Hybrid",
-        model_used: isHit ? "Semantic Cache" : "Groq Llama-3.3",
+        model_used: isHit ? "Semantic Cache" : "Groq gpt-oss-120b",
         groundedness: result.support || null,
         cache_performance: {
           cache_hit: isHit,
@@ -1020,7 +1020,7 @@ export default function Home() {
                                     </Badge>
                                   )}
                                   <span className="text-[11px] font-mono text-[#647474]">
-                                    {msg.model_used || "Groq Llama-3.3"}
+                                    {msg.model_used || "Groq gpt-oss-120b"}
                                   </span>
                                 </div>
                                 {msg.cache_performance.cache_hit && (
@@ -1353,7 +1353,7 @@ export default function Home() {
                 <Card className="flex flex-col gap-3">
                   <span className="text-xs font-bold text-[#647474]">Throughput Summary</span>
                   <div className="text-3xl font-extrabold font-mono text-[#0f1717]">
-                    {(cacheStats?.total_hits || 0) + (cacheStats?.total_misses || 0)}
+                    {(cacheStats?.total_queries || 0)}
                   </div>
                   <span className="text-xs text-[#647474]">Total Queries Evaluated</span>
                   <div className="w-full bg-[#e5f0f0] h-2.5 rounded-full overflow-hidden mt-2">
@@ -1369,7 +1369,7 @@ export default function Home() {
                   <div className="text-3xl font-extrabold font-mono text-[#f45b0b]">
                     {(cacheStats?.estimated_tokens_saved ?? cacheStats?.tokens_saved ?? 0).toLocaleString()}
                   </div>
-                  <span className="text-xs text-[#647474]">Tokens Saved vs Groq Llama-3.3</span>
+                  <span className="text-xs text-[#647474]">Tokens Saved vs Groq gpt-oss-120b</span>
                 </Card>
 
                 <Card className="flex flex-col gap-3">

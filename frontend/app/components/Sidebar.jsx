@@ -155,7 +155,7 @@ export function Sidebar({
           </div>
           <div className="flex items-center justify-between">
             <span>LLM Engine</span>
-            <span className="text-[#f45b0b] font-bold">Groq Llama-3.3</span>
+            <span className="text-[#f45b0b] font-bold">Groq gpt-oss-120b</span>
           </div>
         </div>
       )}
