@@ -3,6 +3,13 @@
 RAG-based PDF summarizer & Q&A with Document-Aware Semantic Caching — upload a PDF, ask questions, get answers
 grounded in the document with page citations, with semantically equivalent questions cached instantly.
 
+🌐 **Live demo:** https://pdf-analyzer-vercel.vercel.app/
+
+## Screenshots
+
+![Knowlix overview — every answer has a page](docs/screenshots/overview.png)
+![Knowlix AI Workspace — grounded answer with page citations](docs/screenshots/workspace.png)
+
 - **Frontend** (`frontend/`): Next.js 14 app — upload, analyze, ask, with
   per-answer Support / Sources / Retrieval lines, refusal explanations, cache badges (Exact Hit, Semantic Hit, RAG Miss),
   expandable performance telemetry panels, and a dedicated **Semantic Cache & Analytics Dashboard** with 3-mode live benchmarking.
