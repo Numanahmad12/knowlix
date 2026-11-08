@@ -10,14 +10,6 @@ on Render (both free tiers).
   (`GET /api/health` → `{"status":"ok","version":"1.0.0","llm_mode":"groq"}`)
 - `NEXT_PUBLIC_API_URL` on Vercel is set to the Render backend URL.
 
-**Remaining rename step:** the GitHub repo (`pdf-analyzer-vercel`), the
-Vercel project, and the Render service still carry the old `pdf-analyzer`
-names. Renaming them gives the app its Knowlix URLs — after the Render
-service is renamed, update `NEXT_PUBLIC_API_URL` in Vercel and redeploy
-the frontend (the Render URL changes with the service name).
-
-The sections below record how the deployment was set up.
-
 ## Frontend → Vercel
 
 1. Import the repo (or the `frontend/` directory) as a new Vercel project.
@@ -50,8 +42,7 @@ fly open   # note the https://<app>.fly.dev URL → use as NEXT_PUBLIC_API_URL
    `NEXT_PUBLIC_API_URL`.
 
 Free-tier note: Render's free web service sleeps after inactivity, so the
-first request after idle can take ~30–60 s to wake. Fly.io's free allowance
-has similar cold-start behaviour on its smallest machines.
+first request after idle can take ~30–60 s to wake.
 
 ## Required environment variables
 
@@ -64,7 +55,9 @@ Optional backend tunables (defaults in `backend/.env.example`):
 `GROQ_MODEL` (default `openai/gpt-oss-120b`), `MIN_RETRIEVAL_SCORE=0.40`,
 `MIN_CLAIM_SUPPORT_RATIO=0.34`, `MAX_FILE_SIZE_MB=20`, `MAX_PDF_PAGES=500`,
 `RRF_K=60`, `EMBEDDING_MODEL`, `CHUNK_SIZE`, `CHUNK_OVERLAP`,
-`RETRIEVER_TOP_K`.
+`RETRIEVER_TOP_K`, `REDIS_URL` (optional Redis connection string for exact cache),
+`CACHE_ENABLED=true`, `CACHE_SIMILARITY_THRESHOLD=0.90`, `CACHE_TTL_SECONDS=86400`,
+`CACHE_MAX_ENTRIES=1000`.
 
 ## Before going live
 
@@ -74,4 +67,4 @@ Optional backend tunables (defaults in `backend/.env.example`):
 - **Keys:** never commit `.env` or a real `GROQ_API_KEY`. Rotate any key
   that was ever shared in chat or pasted into a public place.
 - **Health check:** after deploy, `curl <backend-url>/api/health` should
-  return `{"status":"ok","version":"1.0.0","llm_mode":"groq"}`.
+  return `{"status":"ok","version":"1.0.0","llm_mode":"groq","cache_enabled":true}`.

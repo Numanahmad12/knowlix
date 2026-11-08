@@ -146,3 +146,78 @@ export function retrievalLabel(doc) {
   if (doc.retrieval_mode === "keyword") return "Keyword-only";
   return doc.dense_available ? "Hybrid (FAISS)" : "Keyword-only";
 }
+
+
+export async function fetchSuggestedQuestions(sessionId) {
+  const res = await fetchWithTimeout(
+    `${API_URL}/api/suggestions/${encodeURIComponent(sessionId)}`,
+    {},
+    10000
+  );
+  return handleResponse(res, "Could not fetch suggested questions.");
+}
+
+
+// ── Cache Engine API Methods ────────────────────────────────────────────────
+
+export async function fetchCacheStats() {
+  const res = await fetchWithTimeout(`${API_URL}/api/cache/stats`, {}, 10000);
+  return handleResponse(res, "Could not fetch cache statistics.");
+}
+
+export async function fetchCacheEntries(queryFilter = null) {
+  const base = `${API_URL}/api/cache/entries`;
+  const url = queryFilter ? `${base}?q=${encodeURIComponent(queryFilter)}` : base;
+  const res = await fetchWithTimeout(url, {}, 10000);
+  return handleResponse(res, "Could not fetch cache entries.");
+}
+
+export async function deleteCacheEntry(entryId) {
+  const res = await fetchWithTimeout(
+    `${API_URL}/api/cache/entries/${encodeURIComponent(entryId)}`,
+    { method: "DELETE" },
+    10000
+  );
+  return handleResponse(res, "Could not delete cache entry.");
+}
+
+export async function clearAllCache() {
+  const res = await fetchWithTimeout(
+    `${API_URL}/api/cache/clear`,
+    { method: "POST" },
+    10000
+  );
+  return handleResponse(res, "Could not clear cache.");
+}
+
+export async function fetchCacheSettings() {
+  const res = await fetchWithTimeout(`${API_URL}/api/cache/settings`, {}, 10000);
+  return handleResponse(res, "Could not fetch cache settings.");
+}
+
+export async function updateCacheSettings(settings) {
+  const res = await fetchWithTimeout(`${API_URL}/api/cache/settings`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(settings),
+  });
+  return handleResponse(res, "Could not update cache settings.");
+}
+
+export async function runBenchmark(sessionId = null) {
+  const res = await fetchWithTimeout(
+    `${API_URL}/api/cache/benchmark/run`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionId }),
+    },
+    60000
+  );
+  return handleResponse(res, "Could not execute benchmark.");
+}
+
+export async function fetchBenchmarkHistory() {
+  const res = await fetchWithTimeout(`${API_URL}/api/cache/benchmarks`, {}, 10000);
+  return handleResponse(res, "Could not fetch benchmark history.");
+}

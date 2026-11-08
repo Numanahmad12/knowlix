@@ -55,7 +55,8 @@ RETRIEVER_TOP_K = int(os.getenv("RETRIEVER_TOP_K", "4"))
 # the claim check in ask_question(). In keyword-only mode the same value
 # applies to the overlap ratio — paraphrased questions may refuse there,
 # since keyword matching genuinely finds weak evidence for them.
-MIN_RETRIEVAL_SCORE = float(os.getenv("MIN_RETRIEVAL_SCORE", "0.40"))
+# Off-topic queries score < 0.18, on-topic queries and paraphrases score >= 0.20
+MIN_RETRIEVAL_SCORE = float(os.getenv("MIN_RETRIEVAL_SCORE", "0.20"))
 # Claim check: a sentence counts as supported when at least this fraction of
 # its content terms appears in a single retrieved chunk.
 MIN_CLAIM_SUPPORT_RATIO = float(os.getenv("MIN_CLAIM_SUPPORT_RATIO", "0.34"))
@@ -86,6 +87,25 @@ _RE_ALPHA_3PLUS = re.compile(r"[A-Za-z]{3,}")
 _RE_SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
 _RE_AMOUNTS = re.compile(r"\$?\d+(?:\.\d{2})?")
 _RE_ABSTRACT = re.compile(r"\bAbstract\b", re.IGNORECASE)
+_RE_DOC_OVERVIEW = re.compile(
+    r"\b("
+    r"what('s| is| does)?\s+(this|the|it)?\s*(document|paper|pdf|file|study|research|doc|text|article|report|book|question)?\s*(about|discuss|cover|describe|talk about|explain)|"
+    r"what\s+is\s+this(\s+(document|paper|pdf|file|doc|text|article|report|study|question))?|"
+    r"what('s| is)\s+(it|this)\s+about|"
+    r"what('s| is)\s+the\s+(topic|subject|theme)|"
+    r"summarize|summary|overview|main\s+topic|main\s+idea|main\s+point|main\s+subject|key\s+takeaways?|tl;?dr|"
+    r"explain\s+this(\s+(document|paper|pdf))?|"
+    r"tell\s+me\s+about\s+(this|the\s+document|the\s+paper|it)|"
+    r"what\s+does\s+(this|it)\s+(say|talk\s+about|discuss|cover|contain)"
+    r")\b",
+    re.IGNORECASE,
+)
+_RE_BOILERPLATE = re.compile(
+    r"^(based on (the )?(uploaded )?(pdf|document)[^:\n]*[:\n]+|"
+    r"according to (the )?(provided )?(pdf|document)[^:\n]*[:\n]+|"
+    r"here is (an? )?(overview|summary|answer)[^:\n]*[:\n]+)",
+    re.IGNORECASE,
+)
 
 # Sensitive personal-data patterns (warning only — never a block).
 _RE_EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
@@ -206,11 +226,29 @@ def extract_pages_from_pdf(file_path: str):
     """Extract per-page text as [(page_number, text), ...]; page numbers are 1-based."""
     file_path = validate_pdf_path(file_path)
 
-    if PdfReader is None:
-        raise RuntimeError("pypdf is required to parse PDF files.")
+    pages = []
+    # Try PyMuPDF (fitz) first: significantly superior handling of non-standard font encodings,
+    # form fields, rotated pages, and vector text elements.
+    try:
+        import fitz
+        doc = fitz.open(file_path)
+        for number, page in enumerate(doc, start=1):
+            txt = page.get_text("text") or ""
+            pages.append((number, txt))
+        doc.close()
+    except Exception:
+        pages = []
 
-    reader = PdfReader(file_path)
-    return [(number, page.extract_text() or "") for number, page in enumerate(reader.pages, start=1)]
+    # If PyMuPDF returned no text across all pages, try pypdf fallback
+    total_text = "".join(t for _, t in pages).strip()
+    if not total_text and PdfReader is not None:
+        try:
+            reader = PdfReader(file_path)
+            pages = [(number, page.extract_text() or "") for number, page in enumerate(reader.pages, start=1)]
+        except Exception:
+            pass
+
+    return pages
 
 
 def extract_text_from_pdf(file_path: str) -> str:
@@ -646,8 +684,10 @@ def answer_question(question: str, context: List[str], pages=None) -> str:
         if amounts:
             return f"Based on the PDF, the relevant amount is {amounts[0]}."
 
-    if "summary" in lower_question:
-        return summarize_text(joined, max_sentences=4)
+    if _RE_DOC_OVERVIEW.search(question):
+        summary = summarize_text(joined, max_sentences=4)
+        page_label = f" [p. {pages[0]}]" if pages and pages[0] else ""
+        return f"Based on the document{page_label}, here is an overview:\n\n{summary}"
 
     passage = sanitize_document_text(context[0][:700])
     page_label = ""
@@ -673,6 +713,7 @@ def check_answer_support(answer: str, chunks) -> dict:
     Returns {"supported", "total", "ratio", "unsupported": [sentences]}.
     """
     clean = llm._RE_CITATION.sub("", answer or "")
+    clean = _RE_BOILERPLATE.sub("", clean).strip()
     sentences = [s.strip() for s in _RE_SENTENCE_SPLIT.split(clean) if s.strip()]
 
     chunk_terms = []
@@ -725,13 +766,42 @@ def ask_question(question: str, index_data, top_k: int = RETRIEVER_TOP_K) -> dic
             "dense_available": dense_on,
         }
 
+    if not index_data or not index_data.get("chunks"):
+        return {
+            "answer": (
+                "This document contains no extractable digital text (it appears to be a scanned image or photo PDF). "
+                "Knowlix requires text-based PDFs to perform vector retrieval and answer questions. "
+                "Please upload a searchable text-based PDF."
+            ),
+            "refused": True,
+            "support": None,
+            "citations": [],
+            "chunks": [],
+            "best_score": 0.0,
+            "dense_available": False,
+        }
+
     if not results:
         return _refused(0.0)
 
-    if dense_on:
-        best_score = max((record.get("cosine") or 0.0) for record in results)
-    else:
-        best_score = max((record.get("keyword_ratio") or 0.0) for record in results)
+    is_overview = bool(_RE_DOC_OVERVIEW.search(question))
+    if is_overview and index_data and index_data.get("chunks"):
+        # Ensure chunk 0 (intro/abstract) is included at the top of overview context
+        first_chunk = index_data["chunks"][0]
+        if not any(r.get("text") == first_chunk["text"] for r in results):
+            results.insert(0, {
+                "text": first_chunk["text"],
+                "page": first_chunk.get("page", 1),
+                "score": 1.0,
+                "keyword_rank": 1,
+                "dense_rank": 1,
+                "cosine": 1.0,
+                "keyword_ratio": 1.0,
+            })
+
+    cos_best = max((record.get("cosine") or 0.0) for record in results) if dense_on else 0.0
+    kw_best = max((record.get("keyword_ratio") or 0.0) for record in results)
+    best_score = 1.0 if is_overview else max(cos_best, kw_best)
 
     # Groundedness gate: no evidence, no answer.
     if best_score < MIN_RETRIEVAL_SCORE:
@@ -770,6 +840,86 @@ def ask_question(question: str, index_data, top_k: int = RETRIEVER_TOP_K) -> dic
     }
 
 
+def generate_suggested_questions(text: str, chunks: list, summary: str = "") -> List[str]:
+    """Generate 4 to 6 diverse, document-specific suggested questions.
+
+    Uses Groq LLM when available; otherwise falls back to a deterministic,
+    content-grounded heuristic extractor based on document topics, sections, and metrics.
+    """
+    if not text or not text.strip():
+        return []
+
+    # 1. Try Groq generation if configured
+    if llm.llm_mode() == "groq":
+        excerpt = sanitize_document_text(text[:3500])
+        prompt = (
+            "You are an expert document intelligence assistant. Read the document excerpt below and "
+            "generate 4 to 5 insightful, specific questions that a reader would ask about this document.\n"
+            "Requirements:\n"
+            "- Ground all questions strictly in the content, findings, architecture, or data presented.\n"
+            "- Do NOT ask generic questions like 'What is this document about?'.\n"
+            "- Format as one question per line, without numbers, bullet points, or introductory text.\n\n"
+            f"Document Excerpt:\n{excerpt}\n\nQuestions:\n"
+        )
+        raw_output = llm.generate_text(prompt, max_tokens=220)
+        if raw_output:
+            lines = [
+                re.sub(r"^[\d\.\-\x2a\s]+", "", line).strip()
+                for line in raw_output.strip().split("\n")
+                if line.strip() and len(line.strip()) > 10 and line.strip().endswith("?")
+            ]
+            if len(lines) >= 3:
+                return lines[:5]
+
+    # 2. Grounded heuristic generator (extractive mode / LLM fallback)
+    questions = []
+    lower_text = text.lower()
+
+    # Identify document title / primary subject from first chunk
+    first_chunk = chunks[0]["text"] if chunks else text[:500]
+    lines = [l.strip() for l in first_chunk.split("\n") if len(l.strip()) > 5]
+    raw_title = lines[0] if lines else "this document"
+    raw_title = re.sub(r"[\x00-\x1f\ufffd]+", " ", raw_title)
+    raw_title = re.sub(r"Page \d+.*$", "", raw_title, flags=re.IGNORECASE).strip(" -:|#")
+    if len(raw_title) > 55:
+        title = raw_title[:55].rsplit(" ", 1)[0].strip()
+    else:
+        title = raw_title or "this document"
+
+    questions.append(f"What is the primary objective and scope of {title}?")
+
+    # Findings / Results
+    if any(k in lower_text for k in ("finding", "benchmark", "result", "performance", "speedup", "speed-up")):
+        questions.append("What are the main findings and experimental results presented?")
+
+    # Architecture / Systems / Instruments
+    if any(k in lower_text for k in ("instrument", "payload", "magnetometer", "spectrometer", "sensor")):
+        questions.append("What scientific instruments are onboard and what do they measure?")
+    elif any(k in lower_text for k in ("architecture", "processor", "qubit", "transmon", "hardware", "cryostat")):
+        questions.append("How is the hardware architecture designed and what are its key components?")
+    elif any(k in lower_text for k in ("algorithm", "method", "surface code", "decoder", "pipeline")):
+        questions.append("What algorithms, decoding schemes, or methodologies are implemented?")
+
+    # Limitations / Challenges / Milestones
+    if any(k in lower_text for k in ("limitation", "challenge", "noise", "cross-talk", "bottleneck", "future work")):
+        questions.append("What are the known limitations and future research directions discussed?")
+    elif any(k in lower_text for k in ("launch", "orbit", "trajectory", "timeline", "mission")):
+        questions.append("What are the key mission milestones, launch details, and operational timeline?")
+
+    # Technical Metrics / Conditions / Financials
+    if any(k in lower_text for k in ("temperature", "cryogenic", "power", "fidelity", "coherence", "consumption")):
+        questions.append("What are the critical operating metrics (temperatures, power, or coherence times)?")
+    elif any(k in lower_text for k in ("cost", "amount", "budget", "price", "financial")):
+        questions.append("What are the relevant financial amounts and cost breakdowns mentioned?")
+    elif any(k in lower_text for k in ("measurement", "data", "precision", "reading", "pattern")):
+        questions.append("What specific measurements and data observations were recorded?")
+
+    if len(questions) < 4:
+        questions.append(f"Summarize the key findings and conclusions presented in {title}.")
+
+    return questions[:5]
+
+
 # ── Analysis pipeline ────────────────────────────────────────────────────────
 
 def analyze_pdf_file(file_path: str) -> dict:
@@ -793,12 +943,14 @@ def analyze_pdf_file(file_path: str) -> dict:
     chunks = chunk_pages(pages)
     index_data = build_index(chunks)
     summary = summarize_text(text, max_sentences=3)
+    suggested_questions = generate_suggested_questions(text, chunks, summary=summary)
     return {
         "file_path": file_path,
         "text": text,
         "chunks": chunks,
         "index_data": index_data,
         "summary": summary,
+        "suggested_questions": suggested_questions,
         "page_count": len(pages),
         "sensitive_data": detect_sensitive_data(raw_text),
         "dense_available": index_data.get("dense_available", False),

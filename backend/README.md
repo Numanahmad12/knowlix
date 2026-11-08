@@ -1,24 +1,35 @@
 # Knowlix backend (FastAPI)
 
-RAG PDF Q&A backend for the Vercel build of Numan Ahmad's Knowlix.
-Extracted from the reference Streamlit app (commit 8250835 of
-`Numanahmad12/pdf_analyzer`) with behaviour and thresholds unchanged; the
-only functional change is Groq (`openai/gpt-oss-120b`) replacing local
-Ollama for generation, with the same extractive fallback when no key is set
-or the call fails.
+RAG PDF Q&A backend with Document-Aware Semantic Caching for the Vercel build of Numan Ahmad's Knowlix.
+Extracted from the reference Streamlit app (commit 8250835 of `Numanahmad12/pdf_analyzer`) with behaviour and thresholds unchanged; the generation engine uses Groq (`openai/gpt-oss-120b`) with an extractive fallback, augmented with an isolated FAISS semantic caching layer.
 
 ## Endpoints
 
 | Method | Path | Description |
 | --- | --- | --- |
-| GET | `/api/health` | `{"status":"ok","version":"1.0.0","llm_mode":"groq"\|"extractive"}` |
-| POST | `/api/upload` | Multipart `file` (PDF). Auto-analyzes, returns a `session_id` + summary. |
+| GET | `/api/health` | `{"status":"ok","version":"1.0.0","llm_mode":"groq"\|"extractive","cache_enabled":true}` |
+| POST | `/api/upload` | Multipart `file` (PDF). Auto-analyzes, returns a `session_id`, `doc_hash`, summary. |
 | POST | `/api/sample` | Analyzes the bundled Aurora fixture (`app/sample/test_document.pdf`). |
-| POST | `/api/ask` | JSON `{"session_id","question"}` → grounded answer + citations + support. |
-| DELETE | `/api/session/{session_id}` | Drops a session. |
+| POST | `/api/ask` | JSON `{"session_id","question"}` → grounded answer + citations + support + cache telemetry. |
+| DELETE | `/api/session/{session_id}` | Drops a session and invalidates its associated cache entries. |
+| GET | `/api/cache/stats` | Real-time cache telemetry: hit rate, calls avoided, tokens saved, cost savings. |
+| GET | `/api/cache/entries` | Searchable list of active cache entries. |
+| GET | `/api/cache/entries/{id}` | Retrieve details for a specific cache entry. |
+| DELETE | `/api/cache/entries/{id}` | Invalidate a specific cache entry. |
+| POST | `/api/cache/clear` | Clear all cache entries and reset telemetry. |
+| GET | `/api/cache/settings` | Read current runtime cache engine configuration. |
+| PATCH | `/api/cache/settings` | Update cache thresholds, TTL, or toggle modes dynamically. |
+| POST | `/api/cache/benchmark/run` | Execute automated 3-mode architectural benchmark against active session. |
+| GET | `/api/cache/benchmarks` | Retrieve historical benchmark execution results. |
 
-Sessions are in-memory only (uuid4 keys). Upload limits: 20 MB, 500 pages
-(400 on violation). Unknown `session_id` → 404.
+## Knowlix Semantic Cache Engine
+
+- **Dedicated Vector Store**: An isolated FAISS `IndexFlatIP(384)` index (using `IndexIDMap2`) dedicated exclusively to semantic caching — never mixed with document retrieval vectors.
+- **Dual-Tier Caching**: High-speed exact hash lookup (Redis or bounded thread-safe in-memory LRU) + cosine vector similarity matching.
+- **Zero-Torch Embeddings**: Reuses the bundled ONNX Runtime `all-MiniLM-L6-v2` embedder (384 dimensions, normalized), fitting within 512 MB Render free-tier RAM.
+- **Document & Context Isolation**: Cache entries are bound to document content hashes (`SHA-256`), user ID, tenant ID, and system prompt hashes. Unrelated documents never share cached answers.
+- **Intent Safeguard Filters**: Semantic similarity threshold (default 0.90) augmented with heuristic filters detecting negation mismatches, numerical/temporal discrepancies, and entity contrasts.
+- **Guardrail Preservation**: Refused questions (`REFUSAL_TEXT`), ungrounded answers, or injection attempts are strictly excluded from storage.
 
 ## Run locally
 
@@ -28,14 +39,12 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# Optional: enable Groq answers (without it, answers use the extractive fallback)
-cp .env.example .env   # then set GROQ_API_KEY in .env
+# Optional: enable Groq answers and configure Redis
+cp .env.example .env   # then set GROQ_API_KEY / REDIS_URL in .env
 # or: export GROQ_API_KEY=...
 
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
-
-Check it: `curl http://localhost:8000/api/health`
 
 Interactive docs: http://localhost:8000/docs
 
@@ -51,35 +60,32 @@ docker run --rm -p 8000:8000 -e GROQ_API_KEY=... knowlix-backend
 
 ```bash
 cd backend
-pytest -q
+pytest -v              # 52 tests (all core, API, and semantic cache tests)
 ```
-
-The suite ports all 21 reference tests (retrieval, guardrails, citations,
-prompt-injection, input caps) plus FastAPI endpoint smoke tests using
-`TestClient`. Dense-retrieval tests skip automatically when the embedding
-model cannot load (no network / no model cache) — the keyword-only fallback
-is tested explicitly instead.
 
 ## Layout
 
 ```
 backend/
   app/
-    core.py     pure RAG logic (extraction, chunking, hybrid retrieval, guardrails)
-    llm.py      Groq client (key from GROQ_API_KEY env only) + citation cleanup
-    main.py     FastAPI app + session store
-    sample/     bundled Aurora fixture PDF for /api/sample
-  tests/        ported reference tests + endpoint smoke tests
+    cache/
+      __init__.py       package exports
+      benchmark.py      3-mode benchmark suite (A: Baseline, B: Exact, C: Semantic)
+      engine.py         orchestrator (dual-tier lookup, invalidation, lifecycle)
+      exact.py          Redis exact cache with in-memory LRU fallback
+      metrics.py        real-time telemetry & financial token savings tracker
+      models.py         domain models (CacheEntry, CacheConfig, CacheStats)
+      safeguards.py     intent mismatch & semantic drift filters
+      vector_store.py   isolated FAISS IndexFlatIP(384) + IndexIDMap2
+    core.py             pure RAG logic (extraction, chunking, hybrid retrieval, guardrails)
+    llm.py              Groq client + citation cleanup
+    main.py             FastAPI app + session store & cache routing
+    sample/             bundled Aurora fixture PDF
+  tests/
+    test_api.py         endpoint smoke tests
+    test_core.py        core retrieval, chunking, and guardrail tests
+    test_semantic_cache.py  18-point verification suite for semantic caching
   requirements.txt
   Dockerfile
   .env.example
 ```
-
-## Notes
-
-- The embedding model (`all-MiniLM-L6-v2`, ~90 MB ONNX) is bundled in
-  `app/onnx_model/` and runs via ONNX Runtime — no torch, no download at
-  runtime. Without it the backend degrades to keyword-only retrieval.
-- CORS is open (`allow_origins=["*"]`) for local dev. Restrict it to the
-  Vercel domain before deploying — see `../DEPLOY.md`.
-- Never commit a real `.env` or API key.
