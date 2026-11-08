@@ -443,7 +443,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafa] text-[#0f1717] flex flex-col font-sans selection:bg-[#a8c9c8]/30 selection:text-[#0f1717]">
+    <div className={`${currentView === "workspace" ? "h-screen max-h-screen overflow-hidden" : "min-h-screen"} bg-[#f8fafa] text-[#0f1717] flex flex-col font-sans selection:bg-[#a8c9c8]/30 selection:text-[#0f1717]`}>
       {/* ⌘K Command Hub Dialog */}
       <CommandPalette
         isOpen={commandPaletteOpen}
