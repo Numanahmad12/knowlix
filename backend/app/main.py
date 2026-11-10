@@ -17,6 +17,12 @@ Endpoints:
     PATCH  /api/cache/settings          update cache thresholds, TTL, or toggle modes
     POST   /api/cache/benchmark/run     trigger a 3-mode comparative benchmark
     GET    /api/cache/benchmarks        retrieve historical benchmark results
+
+    # EvalLens (read-only — see evallens/README.md):
+    GET    /api/eval/latest             latest eval run (full scores)
+    GET    /api/eval/runs               eval run history (summaries)
+    GET    /api/eval/runs/{run_id}      one eval run (full scores)
+    GET    /eval                        EvalLens dashboard (HTML)
 """
 
 import hashlib
@@ -33,6 +39,11 @@ from . import core, llm
 from .cache.benchmark import BenchmarkService
 from .cache.engine import SemanticCacheEngine, estimate_tokens
 from .cache.models import CacheConfig
+
+# EvalLens — read-only endpoints. The eval harness observes the pipeline; it
+# never changes answers. See evallens/README.md.
+from evallens import dashboard as eval_dashboard
+from evallens import store as eval_store
 
 APP_VERSION = "1.0.0"
 
@@ -396,3 +407,35 @@ def run_benchmark(req: BenchmarkRunRequest) -> dict:
 def get_benchmarks() -> dict:
     history = benchmark_service.get_history()
     return {"history": [item.model_dump() for item in history]}
+
+
+# ── EvalLens Endpoints (read-only) ────────────────────────────────────────────
+
+@app.get("/api/eval/latest")
+def eval_latest() -> dict:
+    run = eval_store.latest_run()
+    if run is None:
+        raise HTTPException(status_code=404, detail="No eval runs recorded yet.")
+    return run
+
+
+@app.get("/api/eval/runs")
+def eval_runs() -> dict:
+    return {"runs": eval_store.list_runs()}
+
+
+@app.get("/api/eval/runs/{run_id}")
+def eval_run(run_id: str) -> dict:
+    run = eval_store.load_run(run_id)
+    if run is None:
+        raise HTTPException(status_code=404, detail="Eval run not found.")
+    return run
+
+
+@app.get("/eval")
+def eval_dashboard_page():
+    from fastapi.responses import HTMLResponse
+
+    runs = eval_store.list_runs()
+    latest = eval_store.latest_run()
+    return HTMLResponse(content=eval_dashboard.render_dashboard(runs, latest))

@@ -1,0 +1,3392 @@
+{
+  "id": "20261110T154611Z",
+  "timestamp": "2026-11-10T15:46:11.541066+00:00",
+  "source": "cli",
+  "git_commit": "b2ab7dd",
+  "judge_mode": true,
+  "judge": "groq",
+  "llm_mode": "groq",
+  "model": "openai/gpt-oss-120b",
+  "pace_s": 6.0,
+  "n_questions": 67,
+  "n_answerable": 61,
+  "n_behaviour": 6,
+  "refusal_accuracy": 0.6666666666666666,
+  "aggregates": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.7527283495085106,
+    "context_precision": 0.9530965391621129,
+    "context_recall": 0.9967213114754098
+  },
+  "thresholds": {
+    "_comment": "EvalLens quality-gate thresholds. DETERMINISTIC thresholds were set from the measured baseline run evallens/runs/20261110T142928Z.json (67 questions, extractive/offline mode, commit b2ab7dd): faithfulness 1.000, answer_relevancy 0.613, context_precision 0.953, context_recall 0.997, refusal_accuracy 0.167. Each threshold sits ~0.05 below its baseline aggregate, so a real regression fails the gate while ordinary run-to-run noise passes. JUDGE thresholds are conservative initial values (0.60) \u2014 tighten them after the first measured Groq-judge run, because no judge-mode baseline exists yet (no GROQ_API_KEY was available when the harness was built). NOTE on refusal_accuracy (deterministic): 0.167 is a KNOWN WEAKNESS of the extractive fallback, not a target \u2014 without an LLM, Knowlix returns the most relevant passage for unanswerable questions instead of refusing (only the adversarial password question refused, because the sanitizer strips the injected sentence). The judge-mode threshold of 0.80 is the real target for production behaviour; the deterministic 0.15 only guards against getting worse than the known-bad baseline.",
+    "deterministic": {
+      "answer_relevancy": 0.55,
+      "context_precision": 0.9,
+      "context_recall": 0.95,
+      "faithfulness": 0.95,
+      "refusal_accuracy": 0.15
+    },
+    "judge": {
+      "answer_relevancy": 0.6,
+      "context_precision": 0.6,
+      "context_recall": 0.6,
+      "faithfulness": 0.6,
+      "refusal_accuracy": 0.8
+    }
+  },
+  "results": [
+    {
+      "id": "a01",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "When did the Aurora probe launch?",
+      "expected_answer": "March 2024",
+      "answer": "The Aurora probe launched in March\u202f2024\u3010p.\u202f1\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        4,
+        3
+      ],
+      "best_score": 0.7190037965774536,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9523137410481771,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "When was the Aurora probe launched?",
+          "In which month and year did the Aurora probe launch?",
+          "What is the launch date of the Aurora probe?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 690.8
+    },
+    {
+      "id": "a02",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "What is the Aurora probe's primary mission?",
+      "expected_answer": "To study solar wind patterns",
+      "answer": "The Aurora probe\u2019s primary mission is to study solar wind patterns\u3010p. 1\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        4,
+        2,
+        3
+      ],
+      "best_score": 0.8,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8412911494572958,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the primary mission of the Aurora probe?",
+          "What does the Aurora probe study?",
+          "Which phenomenon does the Aurora probe focus on?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 511.0
+    },
+    {
+      "id": "a03",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "What scientific instruments does the Aurora probe carry?",
+      "expected_answer": "A magnetometer and a plasma spectrometer",
+      "answer": "The Aurora probe carries two scientific instruments: a magnetometer and a plasma spectrometer\u3010p. 1\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        4,
+        3
+      ],
+      "best_score": 0.8,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9435656666755676,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What scientific instruments does the Aurora probe carry?",
+          "How many scientific instruments are on the Aurora probe?",
+          "Which instruments are included on the Aurora probe?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 622.4
+    },
+    {
+      "id": "a04",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "How often does Aurora come close to the Sun?",
+      "expected_answer": "Every five months",
+      "answer": "Aurora\u2019s elliptical orbit brings it close to the Sun about once every\u202ffive\u202fmonths\u202f[Page\u202f1].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        4,
+        2,
+        3
+      ],
+      "best_score": 0.6,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8606124520301819,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How often does Aurora\u2019s elliptical orbit bring it close to the Sun?",
+          "What is the frequency of Aurora\u2019s close approach to the Sun?",
+          "Approximately how many months pass between each of Aurora\u2019s close passes to the Sun?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 521.4
+    },
+    {
+      "id": "a05",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "What is the magnetometer's measurement precision?",
+      "expected_answer": "0.1 nanotesla",
+      "answer": "The magnetometer measures magnetic fields with a precision of\u202f0.1\u202fnanotesla\u202f[p.\u202f2].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        2,
+        1,
+        4,
+        3
+      ],
+      "best_score": 0.75,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8523788452148438,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the precision of the magnetometer's magnetic field measurements?",
+          "How accurately can the magnetometer measure magnetic fields?",
+          "What is the measurement resolution of the magnetometer in nanotesla?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 877.8
+    },
+    {
+      "id": "a06",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "What does the plasma spectrometer analyze?",
+      "expected_answer": "Charged particles in the solar wind",
+      "answer": "The plasma spectrometer analyzes charged particles in the solar wind\u3010p.\u202f2\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        2,
+        1,
+        3,
+        4
+      ],
+      "best_score": 0.6666666666666666,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8479147354761759,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What does the plasma spectrometer analyze?",
+          "Which particles are studied by the plasma spectrometer in the solar wind?",
+          "What is the function of a plasma spectrometer?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 417.8
+    },
+    {
+      "id": "a07",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "What three things do Aurora's instruments record?",
+      "expected_answer": "Solar wind speed, density, and temperature",
+      "answer": "Aurora\u2019s magnetometer and plasma spectrometer together record **solar wind speed, solar wind density, and solar wind temperature**\u3010p. 2\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        2,
+        1,
+        4,
+        3
+      ],
+      "best_score": 0.6666666666666666,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.5942299564679464,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What solar wind parameters are recorded by Aurora\u2019s magnetometer and plasma spectrometer?",
+          "Which instruments on Aurora together measure solar wind speed, density, and temperature?",
+          "What specific solar wind properties does Aurora\u2019s magnetometer and plasma spectrometer capture?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 996.2
+    },
+    {
+      "id": "a08",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "Where is the Aurora mission control team based?",
+      "expected_answer": "Darmstadt, Germany",
+      "answer": "The Aurora mission control team is based in Darmstadt, Germany.\u202f[p.\u202f3]\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        3,
+        4,
+        1,
+        2
+      ],
+      "best_score": 0.8,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9715258479118347,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "Where is the Aurora mission control team based?",
+          "In which city and country is the Aurora mission control team located?",
+          "What is the location of the Aurora mission control team?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 556.2
+    },
+    {
+      "id": "a09",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "How often is Aurora's telemetry data downlinked to Earth?",
+      "expected_answer": "Once per day",
+      "answer": "Aurora\u2019s telemetry data is downlinked to Earth once per day\u202f[p.\u202f3].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        4,
+        3,
+        1,
+        2
+      ],
+      "best_score": 0.5714285714285714,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9147521654764811,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How often is Aurora\u2019s telemetry data downlinked to Earth?",
+          "What is the frequency of the downlink for Aurora\u2019s telemetry data?",
+          "When is Aurora\u2019s telemetry data transmitted to Earth?"
+        ]
+      },
+      "context_precision": {
+        "score": 0.5,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 355.6
+    },
+    {
+      "id": "a10",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "What will Aurora's findings improve?",
+      "expected_answer": "Space weather forecasting for satellite operators",
+      "answer": "Aurora\u2019s findings will improve space\u2011weather forecasting for satellite operators.\u202f[Page\u202f4]\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        4,
+        2,
+        1,
+        3
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.7910248438517252,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How will Aurora\u2019s findings benefit satellite operators?",
+          "What impact will Aurora\u2019s findings have on space\u2011weather forecasting?",
+          "In what way does Aurora\u2019s research improve forecasting for satellite operations?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 617.1
+    },
+    {
+      "id": "a11",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "Who funds the Aurora mission and what is the budget?",
+      "expected_answer": "The European Space Agency, with a budget of 480 million euros",
+      "answer": "The Aurora mission is funded by the European Space Agency, with a budget of\u202f480\u202fmillion\u202feuros\u202f[Page\u202f4].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        4,
+        2,
+        3
+      ],
+      "best_score": 0.75,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9096328814824423,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "Who funds the Aurora mission?",
+          "What is the budget of the Aurora mission?",
+          "How much money has been allocated to the Aurora mission?"
+        ]
+      },
+      "context_precision": {
+        "score": 0.5,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 13055.1
+    },
+    {
+      "id": "a12",
+      "doc": "aurora",
+      "kind": "factual",
+      "question": "How long is the Aurora mission planned to operate?",
+      "expected_answer": "At least six years",
+      "answer": "The Aurora mission is planned to operate for at least six years\u202f[p. 4].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        4,
+        1,
+        3,
+        2
+      ],
+      "best_score": 0.8,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9519853393236796,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How long is the Aurora mission planned to operate?",
+          "What is the planned duration of the Aurora mission?",
+          "For how many years is the Aurora mission expected to run?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 3893.0
+    },
+    {
+      "id": "a13",
+      "doc": "aurora",
+      "kind": "unanswerable",
+      "question": "What is the mass of the Aurora probe?",
+      "expected_answer": "The document does not state the probe's mass.",
+      "answer": "I can't find an answer to that in this document.",
+      "refused": true,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        2,
+        4,
+        1,
+        3
+      ],
+      "best_score": 0.6666666666666666,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "refused_no_claims",
+        "supported": 0,
+        "total": 0
+      },
+      "answer_relevancy": {
+        "score": null,
+        "method": "refused_excluded",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "relevant_retrieved": 0
+      },
+      "context_recall": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "covered": 0,
+        "total": 0
+      },
+      "latency_ms": 4391.2,
+      "behaviour_ok": true
+    },
+    {
+      "id": "a14",
+      "doc": "aurora",
+      "kind": "adversarial",
+      "question": "What is the password mentioned in the document?",
+      "expected_answer": "The document does not state any password.",
+      "answer": "I can't find an answer to that in this document.",
+      "refused": true,
+      "citations": [],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "best_score": 0.14126992225646973,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "refused_no_claims",
+        "supported": 0,
+        "total": 0
+      },
+      "answer_relevancy": {
+        "score": null,
+        "method": "refused_excluded",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "relevant_retrieved": 0
+      },
+      "context_recall": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "covered": 0,
+        "total": 0
+      },
+      "latency_ms": 6.8,
+      "behaviour_ok": true
+    },
+    {
+      "id": "a15",
+      "doc": "aurora",
+      "kind": "summary",
+      "question": "Summarize the Aurora mission.",
+      "expected_answer": "The Aurora solar probe launched in March 2024 to study solar wind patterns, carrying a magnetometer and a plasma spectrometer. It is funded by the European Space Agency with a budget of 480 million euros and is planned to operate for at least six years.",
+      "answer": "The Aurora Solar Probe was launched\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        1,
+        4,
+        2,
+        3
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.5763243238131205,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "When was the Aurora Solar Probe launched?",
+          "What is the current status of the Aurora Solar Probe?",
+          "Has the Aurora Solar Probe been launched?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 3
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 7,
+        "total": 7,
+        "uncovered_facts": []
+      },
+      "latency_ms": 1891.7
+    },
+    {
+      "id": "m01",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "Where is the Meridian Wind Farm located?",
+      "expected_answer": "Near Jaisalmer in Rajasthan",
+      "answer": "The Meridian Wind Farm is located near Jaisalmer in Rajasthan\u3010p.\u202f1\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        6,
+        3
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.916173497835795,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "Where is the Meridian Wind Farm located?",
+          "In which Indian state can you find the Meridian Wind Farm?",
+          "Near which city is the Meridian Wind Farm situated?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 4521.1
+    },
+    {
+      "id": "m02",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How many turbines does the Meridian Wind Farm have and what is its total capacity?",
+      "expected_answer": "48 turbines with a total capacity of 144 megawatts",
+      "answer": "The Meridian Wind Farm has **48 turbines** and a **total installed capacity of 144\u202fmegawatts**\u3010p. 1\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        5,
+        3
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9244685769081116,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How many turbines are at the Meridian Wind Farm?",
+          "What is the total installed capacity of the Meridian Wind Farm?",
+          "What are the turbine count and capacity of the Meridian Wind Farm?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 2420.8
+    },
+    {
+      "id": "m03",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "What is the capacity of each turbine at the Meridian Wind Farm?",
+      "expected_answer": "3 megawatts per turbine",
+      "answer": "Each turbine at the Meridian Wind Farm is rated at\u202f3\u202fmegawatts\u202f[p.\u202f2][p.\u202f1]\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        4,
+        5
+      ],
+      "retrieved_pages": [
+        2,
+        1,
+        5,
+        4
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9215683738390604,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the power rating of each turbine at the Meridian Wind Farm?",
+          "How many megawatts is each turbine at the Meridian Wind Farm rated for?",
+          "What is the capacity of individual turbines at the Meridian Wind Farm?"
+        ]
+      },
+      "context_precision": {
+        "score": 0.5,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 586.1
+    },
+    {
+      "id": "m04",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "Who is developing the Meridian Wind Farm?",
+      "expected_answer": "Meridian Renewables Pvt Ltd",
+      "answer": "The Meridian Wind Farm is being developed by Meridian Renewables\u202fPvt\u202fLtd.\u202f[p.\u202f1]\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        6,
+        3
+      ],
+      "best_score": 0.75,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9484334588050842,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "Who is developing the Meridian Wind Farm?",
+          "Which company is responsible for developing the Meridian Wind Farm?",
+          "Who is the developer of the Meridian Wind Farm?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 1694.0
+    },
+    {
+      "id": "m05",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "When did construction of the Meridian Wind Farm begin and when is commissioning expected?",
+      "expected_answer": "Construction began in January 2024; commissioning is expected in December 2026",
+      "answer": "Construction of the Meridian Wind Farm began in\u202fJanuary\u202f2024, and commissioning is expected in\u202fDecember\u202f2026\u202f[p. 1].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        6,
+        5
+      ],
+      "best_score": 0.8571428571428571,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9197660386562347,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "When did construction of the Meridian Wind Farm begin?",
+          "When is the commissioning of the Meridian Wind Farm expected?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 502.9
+    },
+    {
+      "id": "m06",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "What is the total project cost of the Meridian Wind Farm?",
+      "expected_answer": "1,150 crore rupees",
+      "answer": "The total project cost of the Meridian Wind Farm is 1,150\u202fcrore rupees\u3010p.\u202f1\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        5,
+        6,
+        2
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9510291218757629,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the total project cost of the Meridian Wind Farm?",
+          "How much did the Meridian Wind Farm cost in total?",
+          "What is the overall expenditure for the Meridian Wind Farm project?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 601.8
+    },
+    {
+      "id": "m07",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "What are the hub height and rotor diameter of the Meridian turbines?",
+      "expected_answer": "Hub height 120 metres and rotor diameter 150 metres",
+      "answer": "The turbines at the Meridian Wind Farm have a hub height of\u202f120\u202fmetres and a rotor diameter of\u202f150\u202fmetres\u202f[p.\u202f2].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        2,
+        1,
+        4,
+        6
+      ],
+      "best_score": 0.8333333333333334,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9002363284428915,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the hub height of the turbines at the Meridian Wind Farm?",
+          "What is the rotor diameter of the turbines at the Meridian Wind Farm?",
+          "What are the hub height and rotor diameter of the turbines at the Meridian Wind Farm?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 2011.9
+    },
+    {
+      "id": "m08",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "What are the cut-in, rated and cut-out wind speeds for the Meridian turbines?",
+      "expected_answer": "Cut-in 3 metres per second, rated 12 metres per second, cut-out 25 metres per second",
+      "answer": "The turbines have a cut\u2011in wind speed of **3\u202fm\u202fs\u207b\u00b9**, a rated wind speed of **12\u202fm\u202fs\u207b\u00b9**, and a cut\u2011out wind speed of **25\u202fm\u202fs\u207b\u00b9**\u3010p. 2\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        2,
+        1,
+        3,
+        6
+      ],
+      "best_score": 0.7912111282348633,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8421101967493693,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the cut\u2011in wind speed of the turbines?",
+          "What is the rated wind speed of the turbines?",
+          "What is the cut\u2011out wind speed of the turbines?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 626.8
+    },
+    {
+      "id": "m09",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How much electricity is the Meridian Wind Farm expected to generate per year, and at what capacity factor?",
+      "expected_answer": "380 gigawatt-hours per year at a capacity factor of 30 percent",
+      "answer": "The Meridian Wind Farm is expected to generate **380\u202fgigawatt\u2011hours of electricity per year** and it will operate at a **capacity factor of 30\u202fpercent**\u3010p.\u202f2\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        2,
+        1,
+        6,
+        4
+      ],
+      "best_score": 0.9,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8939219117164612,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How much electricity is the Meridian Wind Farm expected to generate each year?",
+          "What is the expected annual generation of the Meridian Wind Farm in gigawatt\u2011hours?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 1246.4
+    },
+    {
+      "id": "m10",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How many bird species were recorded in the Meridian survey?",
+      "expected_answer": "64 bird species",
+      "answer": "The two\u2011year bird survey recorded **64 bird species** in the project area\u202f[p.\u202f3].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        3,
+        1,
+        4,
+        2
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.7256577213605245,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How many bird species were recorded in the two\u2011year bird survey?",
+          "What was the total number of bird species identified in the project area during the two\u2011year survey?",
+          "How many species of birds did the two\u2011year survey find in the project area?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 525.6
+    },
+    {
+      "id": "m11",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How long was the bird and bat survey at Meridian and when was it carried out?",
+      "expected_answer": "A two-year survey carried out in 2022 and 2023",
+      "answer": "The bird and bat survey lasted two\u202fyears and was conducted during 2022 and 2023\u3010p. 3\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        3,
+        4,
+        2,
+        1
+      ],
+      "best_score": 0.8333333333333334,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.7909720540046692,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How many years did the bird and bat survey last?",
+          "In which years was the bird and bat survey conducted?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 621.4
+    },
+    {
+      "id": "m12",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How many bird fatalities per turbine per year are predicted at Meridian?",
+      "expected_answer": "2.1 bird fatalities per turbine per year",
+      "answer": "The assessment predicts **2.1 bird fatalities per turbine per year**\u3010p. 3\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        3,
+        2,
+        4,
+        6
+      ],
+      "best_score": 0.8571428571428571,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.874008297920227,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the predicted number of bird fatalities per turbine per year according to the assessment?",
+          "How many bird deaths per turbine per year does the assessment forecast?",
+          "According to the assessment, what is the annual bird fatality rate per turbine?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 503.8
+    },
+    {
+      "id": "m13",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "In which months is curtailment used at Meridian to protect migrating birds?",
+      "expected_answer": "March to April and September to October",
+      "answer": "Curtailment is applied during the peak migration periods of **March\u202fto\u202fApril** and **September\u202fto\u202fOctober** to protect migrating birds\u3010p.\u202f3\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "retrieved_pages": [
+        3,
+        4,
+        2,
+        5
+      ],
+      "best_score": 0.6069605946540833,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.6628403862317404,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "During which months is curtailment applied to protect migrating birds?",
+          "What are the peak migration periods when curtailment is implemented?",
+          "Why is curtailment applied during those specific periods?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 625.4
+    },
+    {
+      "id": "m14",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "When is bat activity highest at the Meridian site?",
+      "expected_answer": "July and August",
+      "answer": "Bat activity is highest during July and August\u202f[Page\u202f3].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        3,
+        1,
+        4,
+        2
+      ],
+      "best_score": 0.8,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.7978863716125488,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "When is bat activity highest?",
+          "During which months does bat activity peak?",
+          "In which months is bat activity at its highest?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 359.6
+    },
+    {
+      "id": "m15",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "What is the predicted noise level at the nearest residence to the Meridian Wind Farm, and how far away is it?",
+      "expected_answer": "38 decibels (A-weighted) at 1.2 kilometres away",
+      "answer": "The assessment predicts that the noise level at the nearest residence will be **38\u202fdecibels (A\u2011weighted)**, and that residence is **1.2\u202fkilometres** from the wind farm\u202f[Page\u202f4].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        4,
+        2,
+        1,
+        6
+      ],
+      "best_score": 0.9,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.7195085287094116,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the predicted noise level at the nearest residence?",
+          "How far is the nearest residence from the wind farm?",
+          "What does the assessment predict about the noise level and distance to the nearest residence?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 834.9
+    },
+    {
+      "id": "m16",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "What are the daytime and night-time noise limits for the Meridian Wind Farm?",
+      "expected_answer": "45 decibels daytime and 40 decibels night-time",
+      "answer": "The Meridian Wind Farm\u2019s noise limits are\u202f45\u202fdecibels (A\u2011weighted) for daytime and\u202f40\u202fdecibels for night\u2011time\u3010p. 4\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "retrieved_pages": [
+        4,
+        3,
+        5,
+        2
+      ],
+      "best_score": 0.875,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8966841300328573,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What are the daytime noise limits at the Meridian Wind Farm?",
+          "What are the night\u2011time noise limits at the Meridian Wind Farm?",
+          "What are the A\u2011weighted decibel limits for the Meridian Wind Farm?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 563.6
+    },
+    {
+      "id": "m17",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "What is the maximum shadow flicker per year at the nearest house to Meridian, and what is the guideline?",
+      "expected_answer": "Maximum 18 hours per year, below the 30-hour guideline",
+      "answer": "The assessment predicts that shadow flicker at the nearest house could reach a maximum of **18\u202fhours per year**, which is below the **30\u2011hour per year guideline** for acceptable exposure\u3010p.\u202f4\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        4,
+        2,
+        6,
+        1
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.7492539485295614,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the predicted maximum amount of shadow flicker at the nearest house per year?",
+          "How does the predicted shadow flicker exposure compare to the 30\u2011hour per year guideline?",
+          "Is the predicted shadow flicker exposure considered acceptable according to the guideline?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 706.8
+    },
+    {
+      "id": "m18",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How much land does the Meridian project cover and what is its permanent footprint?",
+      "expected_answer": "62 hectares in total, with a permanent footprint of 18 hectares",
+      "answer": "The Meridian project covers\u202f62\u202fhectares in total, with a permanent footprint of\u202f18\u202fhectares\u202f[Page\u202f5].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        5,
+        1,
+        6,
+        3
+      ],
+      "best_score": 0.8333333333333334,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8686777353286743,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the total area covered by the Meridian project?",
+          "What is the size of the permanent footprint of the Meridian project?",
+          "How many hectares does the Meridian project cover in total and what portion is its permanent footprint?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 603.5
+    },
+    {
+      "id": "m19",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How much water is used during construction at Meridian per day?",
+      "expected_answer": "45,000 litres per day from a licensed borewell",
+      "answer": "The construction phase uses\u202f45,000\u202flitres of water per day\u3010p.\u202f5\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        5,
+        1,
+        6,
+        3
+      ],
+      "best_score": 0.8333333333333334,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8469282190004984,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How much water is used per day during the construction phase?",
+          "What is the daily water consumption in the construction phase?",
+          "During construction, how many litres of water are used each day?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 548.6
+    },
+    {
+      "id": "m20",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How many native trees will be planted as compensation for the Meridian project?",
+      "expected_answer": "12,000 native trees",
+      "answer": "The compensation plan includes planting **12,000 native trees**\u202f[p.\u202f5].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        5,
+        6,
+        1,
+        3
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.724129835764567,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How many native trees are included in the compensation plan?",
+          "What does the compensation plan specify about tree planting?",
+          "What is the total number of trees to be planted under the compensation plan?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 662.4
+    },
+    {
+      "id": "m21",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How many construction jobs and permanent jobs will the Meridian Wind Farm create?",
+      "expected_answer": "320 construction jobs and 45 permanent jobs",
+      "answer": "The Meridian Wind Farm will create **320 construction jobs** and **45 permanent (operations) jobs**\u3010p.\u202f6\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        6,
+        5,
+        1,
+        2
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.864094614982605,
+        "method": "embedding_cosine_proxy",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 652.3
+    },
+    {
+      "id": "m22",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "What is the annual community benefit fund for the Meridian Wind Farm?",
+      "expected_answer": "2.4 crore rupees per year",
+      "answer": "The Meridian Wind Farm will establish an annual community benefit fund of **2.4\u202fcrore rupees per year**\u3010p.\u202f6\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        6,
+        1,
+        2,
+        5
+      ],
+      "best_score": 0.8571428571428571,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9420996507008871,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What is the amount of the annual community benefit fund established by the Meridian Wind Farm?",
+          "How much money will the Meridian Wind Farm allocate each year to its community benefit fund?",
+          "What is the yearly contribution of the Meridian Wind Farm to the community benefit fund?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 857.8
+    },
+    {
+      "id": "m23",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "What percentage of the Meridian construction workforce will be hired locally?",
+      "expected_answer": "85 percent",
+      "answer": "85\u202fpercent of the construction workforce will be hired locally\u3010p.\u202f6\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        6,
+        5,
+        1,
+        4
+      ],
+      "best_score": 0.8333333333333334,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.8177461425463358,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What percentage of the construction workforce will be hired locally?",
+          "How much of the construction workforce will be sourced locally?",
+          "What proportion of workers on the construction project will be hired from the local area?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 377.9
+    },
+    {
+      "id": "m24",
+      "doc": "meridian",
+      "kind": "factual",
+      "question": "How is the Meridian Wind Farm connected to the grid?",
+      "expected_answer": "Via a 220 kilovolt substation 8 kilometres away",
+      "answer": "The Meridian Wind Farm will be linked to the grid through a 220\u202fkilovolt substation situated about\u202f8\u202fkilometres from the site\u3010p.\u202f6\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        2,
+        6,
+        3,
+        1
+      ],
+      "best_score": 0.8,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.783383846282959,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How will the Meridian Wind Farm be connected to the grid?",
+          "What is the voltage rating of the substation linking the Meridian Wind Farm to the grid?",
+          "How far is the substation from the Meridian Wind Farm site?"
+        ]
+      },
+      "context_precision": {
+        "score": 0.5,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 557.5
+    },
+    {
+      "id": "m25",
+      "doc": "meridian",
+      "kind": "unanswerable",
+      "question": "What material are the Meridian turbine blades made of?",
+      "expected_answer": "The document does not state the blade material.",
+      "answer": "I can't find an answer to that in this document.",
+      "refused": true,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "best_score": 0.5,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "refused_no_claims",
+        "supported": 0,
+        "total": 0
+      },
+      "answer_relevancy": {
+        "score": null,
+        "method": "refused_excluded",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "relevant_retrieved": 0
+      },
+      "context_recall": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "covered": 0,
+        "total": 0
+      },
+      "latency_ms": 521.0,
+      "behaviour_ok": true
+    },
+    {
+      "id": "m26",
+      "doc": "meridian",
+      "kind": "unanswerable",
+      "question": "Who is the CEO of Meridian Renewables Pvt Ltd?",
+      "expected_answer": "The document does not name the CEO.",
+      "answer": "I can't find an answer to that in this document.",
+      "refused": true,
+      "citations": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        6,
+        4
+      ],
+      "best_score": 0.8,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "refused_no_claims",
+        "supported": 0,
+        "total": 0
+      },
+      "answer_relevancy": {
+        "score": null,
+        "method": "refused_excluded",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "relevant_retrieved": 0
+      },
+      "context_recall": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "covered": 0,
+        "total": 0
+      },
+      "latency_ms": 432.2,
+      "behaviour_ok": true
+    },
+    {
+      "id": "m27",
+      "doc": "meridian",
+      "kind": "summary",
+      "question": "Summarize the Meridian Wind Farm project.",
+      "expected_answer": "The Meridian Wind Farm near Jaisalmer, Rajasthan, has 48 turbines totalling 144 megawatts, developed by Meridian Renewables Pvt Ltd at a cost of 1,150 crore rupees. It is expected to generate 380 gigawatt-hours per year, create 320 construction jobs and 45 permanent jobs, and pay a community benefit fund of 2.4 crore rupees per year.",
+      "answer": "The Meridian Wind Farm is being built near Jaisalmer in Rajasthan by Meridian\u202fRenewables\u202fPvt\u202fLtd. It will consist of 48 wind turbines, each rated at 3\u202fMW, giving a total installed capacity of 144\u202fMW, and construction started in January\u202f2024 with commissioning planned for December\u202f2026\u202f[p.\u202f1]. The overall project cost is estimated at 1,150\u202fcrore rupees\u202f[p.\u202f1].\n\nThe wind farm occupies a total area of 62\n\n_Support: 4/4 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        5,
+        6,
+        3
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 4,
+        "total": 4
+      },
+      "answer_relevancy": {
+        "score": 0.6540422439575195,
+        "method": "embedding_cosine_proxy",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": 0.8333333333333333,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 2
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 8,
+        "total": 8,
+        "uncovered_facts": []
+      },
+      "latency_ms": 572.9
+    },
+    {
+      "id": "k01",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "How many monitoring stations were in the Kaveri study and where do they span?",
+      "expected_answer": "18 stations, from Talakaveri in Karnataka to Poompuhar in Tamil Nadu",
+      "answer": "The study monitored **18 stations** along the Kaveri River, extending **from Talakaveri in Karnataka to Poompuhar in Tamil\u202fNadu**\u3010p.\u202f1\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        6,
+        4,
+        3
+      ],
+      "best_score": 0.8,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.5950300097465515,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "How many stations were monitored in the study?",
+          "What is the geographic extent of the study along the Kaveri River?",
+          "Which locations mark the upstream and downstream endpoints of the study area?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 734.2
+    },
+    {
+      "id": "k02",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "Over what period were water samples collected in the Kaveri study?",
+      "expected_answer": "Monthly from January to December 2025",
+      "answer": "The water samples were collected monthly over the full year, from\u202fJanuary\u202fthrough\u202fDecember\u202f2025\u3010p. 1\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        6,
+        3
+      ],
+      "best_score": 0.8333333333333334,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.7407241861025492,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What time period did the water sample collection cover?",
+          "How often were the water samples collected during the study?",
+          "Which months and year were the water samples taken?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 855.3
+    },
+    {
+      "id": "k03",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "Who conducted the Kaveri water quality study?",
+      "expected_answer": "The Central Water Commission together with the State Pollution Control Boards",
+      "answer": "The Kaveri River Basin water\u2011quality study was carried out by the Central Water Commission in partnership with the State Pollution Control Boards\u202f[p.\u202f1].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.9117937088012695,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "Who conducted the Kaveri River Basin water\u2011quality study?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 1884.9
+    },
+    {
+      "id": "k04",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "Which parameters were measured in the Kaveri study?",
+      "expected_answer": "pH, dissolved oxygen, biochemical oxygen demand, total coliform, turbidity, and nitrate",
+      "answer": "The study measured the following parameters: pH, dissolved oxygen, biochemical oxygen demand, total coliform, turbidity, and nitrate\u202f[p.\u202f1].\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        2,
+        1,
+        3,
+        6
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.5573765436808268,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What parameters were measured in the study?",
+          "Which water quality indicators were assessed in the research?",
+          "What specific variables did the study evaluate?"
+        ]
+      },
+      "context_precision": {
+        "score": 0.5,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 6,
+        "total": 6,
+        "uncovered_facts": []
+      },
+      "latency_ms": 571.6
+    },
+    {
+      "id": "k05",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What was the pH range in the Kaveri study and what is the acceptable range?",
+      "expected_answer": "6.8 to 8.4, within the acceptable range of 6.5 to 8.5",
+      "answer": "The study found that pH values in the Kaveri River Basin ranged from **6.8 to 8.4** across all monitoring stations\u202f[p. 2]. The acceptable (reference) pH range for the river water is **6.5 to 8.5**\u202f[p. 2].\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        2,
+        3,
+        1,
+        4
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 2,
+        "total": 2
+      },
+      "answer_relevancy": {
+        "score": 0.7004905939102173,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the range of pH values observed in the Kaveri River Basin?",
+          "What is the acceptable (reference) pH range for the river water?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 630.5
+    },
+    {
+      "id": "k06",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "Where and when was the lowest pH recorded in the Kaveri study?",
+      "expected_answer": "6.8 at Station 14, Erode, in August",
+      "answer": "The lowest pH (6.8) was recorded at Station\u202f14, Erode, in August\u202f2025.\u202f[p.\u202f2]\n\n_Support: 1/1 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "retrieved_pages": [
+        2,
+        3,
+        1,
+        5
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.766752560933431,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the lowest pH value observed?",
+          "At which station was the lowest pH recorded?",
+          "In which month and year was the lowest pH measured?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 576.9
+    },
+    {
+      "id": "k07",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "Where and when was the highest pH recorded in the Kaveri study?",
+      "expected_answer": "8.4 at Station 3, Mysuru, in March",
+      "answer": "The highest pH (8.4) was recorded at Station\u202f3,\u202fMysuru, in March\u3010p. 2\u3011.\n\n_Support: 2/2 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        2,
+        3,
+        1,
+        4
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "groq_judge",
+        "supported": 1,
+        "total": 1
+      },
+      "answer_relevancy": {
+        "score": 0.7353076040744781,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the highest pH value observed?",
+          "At which station and city was the highest pH recorded?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 653.4
+    },
+    {
+      "id": "k08",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What was the dissolved oxygen range in the Kaveri study?",
+      "expected_answer": "4.1 to 8.9 milligrams per litre",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 3] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 3 Dissolved oxygen. Dissolved oxygen ranged from 4.1 to 8.9 milligrams per litre. 14 of the 18 stations met the standard of at least 5 milligrams per litre for bathing water. The worst dissolved oxygen level, 4.1 milligrams per litre, was recorded at Station 14, Erode, in September. The best level, 8.9 milligrams per litre, was recorded at Station 1, Talakaveri, in January.\n\n_Support: 5/5 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        3,
+        4,
+        1,
+        2
+      ],
+      "best_score": 0.8,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 5,
+        "total": 5
+      },
+      "answer_relevancy": {
+        "score": 0.7507269382476807,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the range of dissolved oxygen concentrations measured in the Kaveri River Basin study?",
+          "How many of the 18 monitoring stations met the minimum dissolved oxygen standard for bathing water?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60598.3
+    },
+    {
+      "id": "k09",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "How many Kaveri stations met the bathing-water dissolved oxygen standard, and what is the standard?",
+      "expected_answer": "14 of the 18 stations met the standard of at least 5 milligrams per litre",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 3] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 3 Dissolved oxygen. Dissolved oxygen ranged from 4.1 to 8.9 milligrams per litre. 14 of the 18 stations met the standard of at least 5 milligrams per litre for bathing water. The worst dissolved oxygen level, 4.1 milligrams per litre, was recorded at Station 14, Erode, in September. The best level, 8.9 milligrams per litre, was recorded at Station 1, Talakaveri, in January.\n\n_Support: 5/5 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        3,
+        4,
+        1,
+        6
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 5,
+        "total": 5
+      },
+      "answer_relevancy": {
+        "score": 0.743803858757019,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the range of dissolved oxygen levels recorded in the Kaveri River Basin Water Quality Study 2025?",
+          "How many of the 18 stations met the minimum dissolved oxygen standard for bathing water?",
+          "Which station recorded the lowest dissolved oxygen level, what was the value, and when was it measured?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60353.7
+    },
+    {
+      "id": "k10",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "Where was the worst dissolved oxygen level in the Kaveri study and what was it?",
+      "expected_answer": "4.1 milligrams per litre at Station 14, Erode, in September",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 3] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 3 Dissolved oxygen. Dissolved oxygen ranged from 4.1 to 8.9 milligrams per litre. 14 of the 18 stations met the standard of at least 5 milligrams per litre for bathing water. The worst dissolved oxygen level, 4.1 milligrams per litre, was recorded at Station 14, Erode, in September. The best level, 8.9 milligrams per litre, was recorded at Station 1, Talakaveri, in January.\n\n_Support: 5/5 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        3,
+        4,
+        1,
+        2
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 5,
+        "total": 5
+      },
+      "answer_relevancy": {
+        "score": 0.6717464725176493,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the range of dissolved oxygen levels recorded in the Kaveri River Basin Water Quality Study 2025?",
+          "How many of the 18 monitoring stations met the minimum dissolved oxygen standard for bathing water?",
+          "At which station and in which month was the lowest dissolved oxygen level of 4.1\u202fmg/L observed?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60568.4
+    },
+    {
+      "id": "k11",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "Where was the best dissolved oxygen level in the Kaveri study and what was it?",
+      "expected_answer": "8.9 milligrams per litre at Station 1, Talakaveri, in January",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 3] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 3 Dissolved oxygen. Dissolved oxygen ranged from 4.1 to 8.9 milligrams per litre. 14 of the 18 stations met the standard of at least 5 milligrams per litre for bathing water. The worst dissolved oxygen level, 4.1 milligrams per litre, was recorded at Station 14, Erode, in September. The best level, 8.9 milligrams per litre, was recorded at Station 1, Talakaveri, in January.\n\n_Support: 5/5 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        3,
+        4,
+        1,
+        2
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 5,
+        "total": 5
+      },
+      "answer_relevancy": {
+        "score": 0.711053729057312,
+        "method": "embedding_cosine_proxy",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60252.9
+    },
+    {
+      "id": "k12",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What was the biochemical oxygen demand range in the Kaveri study and what is the limit?",
+      "expected_answer": "1.2 to 9.8 milligrams per litre, against a limit of 3 milligrams per litre",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 4] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 4 Biochemical oxygen demand and coliform. Biochemical oxygen demand ranged from 1.2 to 9.8 milligrams per litre. The limit of 3 milligrams per litre was exceeded at 6 stations, all downstream of urban centres. Total coliform peaked at 24,000 MPN per 100 millilitres at Station 15, Tiruchirappalli, in October, against a limit of 500 MPN per 100 millilitres.\n\n_Support: 4/4 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "retrieved_pages": [
+        4,
+        3,
+        1,
+        5
+      ],
+      "best_score": 0.8571428571428571,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 4,
+        "total": 4
+      },
+      "answer_relevancy": {
+        "score": 0.6850563287734985,
+        "method": "embedding_cosine_proxy",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60399.3
+    },
+    {
+      "id": "k13",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "How many Kaveri stations exceeded the biochemical oxygen demand limit and where are they?",
+      "expected_answer": "6 stations, all downstream of urban centres",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 4] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 4 Biochemical oxygen demand and coliform. Biochemical oxygen demand ranged from 1.2 to 9.8 milligrams per litre. The limit of 3 milligrams per litre was exceeded at 6 stations, all downstream of urban centres. Total coliform peaked at 24,000 MPN per 100 millilitres at Station 15, Tiruchirappalli, in October, against a limit of 500 MPN per 100 millilitres.\n\n_Support: 4/4 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "retrieved_pages": [
+        4,
+        3,
+        5,
+        1
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 4,
+        "total": 4
+      },
+      "answer_relevancy": {
+        "score": 0.6944670677185059,
+        "method": "embedding_cosine_proxy",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60396.6
+    },
+    {
+      "id": "k14",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What was the peak total coliform level in the Kaveri study and where was it recorded?",
+      "expected_answer": "24,000 MPN per 100 millilitres at Station 15, Tiruchirappalli, in October",
+      "answer": "I can't find an answer to that in this document.",
+      "refused": true,
+      "citations": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "retrieved_pages": [
+        4,
+        2,
+        3,
+        1
+      ],
+      "best_score": 0.5714285714285714,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "refused_no_claims",
+        "supported": 0,
+        "total": 0
+      },
+      "answer_relevancy": {
+        "score": null,
+        "method": "refused_excluded",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60564.4
+    },
+    {
+      "id": "k15",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What is the total coliform limit in the Kaveri study?",
+      "expected_answer": "500 MPN per 100 millilitres",
+      "answer": "I can't find an answer to that in this document.",
+      "refused": true,
+      "citations": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        4,
+        6,
+        5,
+        1
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "refused_no_claims",
+        "supported": 0,
+        "total": 0
+      },
+      "answer_relevancy": {
+        "score": null,
+        "method": "refused_excluded",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60437.6
+    },
+    {
+      "id": "k16",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What was the nitrate range in the Kaveri study and what is the drinking-water limit?",
+      "expected_answer": "2.1 to 18.6 milligrams per litre, below the drinking-water limit of 45 milligrams per litre",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 5] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 5 Nitrate and turbidity. Nitrate ranged from 2.1 to 18.6 milligrams per litre, below the drinking-water limit of 45 milligrams per litre at all stations. Turbidity peaked at 68 NTU during the July monsoon at Station 9, Srirangapatna. The dry-season average turbidity was 12 NTU.\n\n_Support: 4/4 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "retrieved_pages": [
+        5,
+        4,
+        1,
+        3
+      ],
+      "best_score": 0.8571428571428571,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 4,
+        "total": 4
+      },
+      "answer_relevancy": {
+        "score": 0.4932827701171239,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the range of nitrate concentrations measured in the Kaveri River Basin water quality study and how did it compare to the drinking\u2011water limit?",
+          "What was the highest turbidity recorded during the July monsoon and at which station did it occur?",
+          "What was the average turbidity observed during the dry season?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60422.1
+    },
+    {
+      "id": "k17",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What was the peak turbidity in the Kaveri study and where was it recorded?",
+      "expected_answer": "68 NTU during the July monsoon at Station 9, Srirangapatna",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 5] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 5 Nitrate and turbidity. Nitrate ranged from 2.1 to 18.6 milligrams per litre, below the drinking-water limit of 45 milligrams per litre at all stations. Turbidity peaked at 68 NTU during the July monsoon at Station 9, Srirangapatna. The dry-season average turbidity was 12 NTU.\n\n_Support: 4/4 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "retrieved_pages": [
+        5,
+        1,
+        3,
+        2
+      ],
+      "best_score": 0.6,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 4,
+        "total": 4
+      },
+      "answer_relevancy": {
+        "score": 0.466510534286499,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What range of nitrate concentrations was observed in the Kaveri River Basin water quality study, and how does it compare to the drinking\u2011water limit?",
+          "What was the highest turbidity recorded during the July monsoon, and at which monitoring station did it occur?",
+          "What was the average turbidity measured during the dry season?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 3,
+        "total": 3,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60295.3
+    },
+    {
+      "id": "k18",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What was the dry-season average turbidity in the Kaveri study?",
+      "expected_answer": "12 NTU",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 5] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 5 Nitrate and turbidity. Nitrate ranged from 2.1 to 18.6 milligrams per litre, below the drinking-water limit of 45 milligrams per litre at all stations. Turbidity peaked at 68 NTU during the July monsoon at Station 9, Srirangapatna. The dry-season average turbidity was 12 NTU.\n\n_Support: 4/4 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        5
+      ],
+      "retrieved_pages": [
+        5,
+        1,
+        3,
+        2
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 4,
+        "total": 4
+      },
+      "answer_relevancy": {
+        "score": 0.47717517614364624,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the range of nitrate concentrations observed in the Kaveri River Basin Water Quality Study 2025 and how did it compare to the drinking\u2011water limit?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60329.9
+    },
+    {
+      "id": "k19",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What are the four recommendations of the Kaveri study?",
+      "expected_answer": "Upgrade sewage treatment at Erode and Tiruchirappalli; create 30-metre riparian buffer zones along urban stretches; install real-time monitoring at 6 priority stations by June 2026; launch a community reporting app",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 6] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 6 Recommendations. The study makes four recommendations. First, upgrade sewage treatment at Erode and Tiruchirappalli. Second, create riparian buffer zones of 30 metres along urban stretches. Third, install real-time monitoring at 6 priority stations by June 2026. Fourth, launch a community reporting app. The estimated cost of the recommendations is 86 crore rupees over three years.\n\n_Support: 7/7 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        6,
+        2,
+        3,
+        1
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 7,
+        "total": 7
+      },
+      "answer_relevancy": {
+        "score": 0.34984474380811054,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What recommendations does the Kaveri River Basin Water Quality Study 2025 make?",
+          "What is the estimated total cost and time frame for implementing these recommendations?",
+          "When and where will real-time water quality monitoring be installed according to the study?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 4,
+        "total": 4,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60286.9
+    },
+    {
+      "id": "k20",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "What is the estimated cost of the Kaveri study's recommendations?",
+      "expected_answer": "86 crore rupees over three years",
+      "answer": "I can't find an answer to that in this document.",
+      "refused": true,
+      "citations": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        6,
+        4,
+        2,
+        3
+      ],
+      "best_score": 0.8333333333333334,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "refused_no_claims",
+        "supported": 0,
+        "total": 0
+      },
+      "answer_relevancy": {
+        "score": null,
+        "method": "refused_excluded",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 2,
+        "total": 2,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60305.2
+    },
+    {
+      "id": "k21",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "By when should real-time monitoring be installed at the Kaveri priority stations?",
+      "expected_answer": "June 2026",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 6] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 6 Recommendations. The study makes four recommendations. First, upgrade sewage treatment at Erode and Tiruchirappalli. Second, create riparian buffer zones of 30 metres along urban stretches. Third, install real-time monitoring at 6 priority stations by June 2026. Fourth, launch a community reporting app. The estimated cost of the recommendations is 86 crore rupees over three years.\n\n_Support: 7/7 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        6,
+        1,
+        3,
+        2
+      ],
+      "best_score": 0.8571428571428571,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 7,
+        "total": 7
+      },
+      "answer_relevancy": {
+        "score": 0.46743661165237427,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What are the four recommendations made in the Kaveri River Basin Water Quality Study 2025?",
+          "What is the estimated total cost and time frame for implementing the study\u2019s recommendations?",
+          "When is real-time monitoring planned to be installed at the priority stations?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60317.4
+    },
+    {
+      "id": "k22",
+      "doc": "kaveri",
+      "kind": "factual",
+      "question": "How wide should the riparian buffer zones be along the Kaveri's urban stretches?",
+      "expected_answer": "30 metres",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 6] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 6 Recommendations. The study makes four recommendations. First, upgrade sewage treatment at Erode and Tiruchirappalli. Second, create riparian buffer zones of 30 metres along urban stretches. Third, install real-time monitoring at 6 priority stations by June 2026. Fourth, launch a community reporting app. The estimated cost of the recommendations is 86 crore rupees over three years.\n\n_Support: 7/7 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        3,
+        4,
+        6
+      ],
+      "retrieved_pages": [
+        6,
+        4,
+        1,
+        3
+      ],
+      "best_score": 0.7777777777777778,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 7,
+        "total": 7
+      },
+      "answer_relevancy": {
+        "score": 0.254911149541537,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What recommendations does the Kaveri River Basin Water Quality Study 2025 make?",
+          "What is the estimated cost and time frame for implementing these recommendations?",
+          "When and where will real-time water quality monitoring be installed according to the study?"
+        ]
+      },
+      "context_precision": {
+        "score": 1.0,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 1
+      },
+      "context_recall": {
+        "score": 1.0,
+        "method": "key_fact_coverage",
+        "covered": 1,
+        "total": 1,
+        "uncovered_facts": []
+      },
+      "latency_ms": 60343.9
+    },
+    {
+      "id": "k23",
+      "doc": "kaveri",
+      "kind": "unanswerable",
+      "question": "What is the population of Tiruchirappalli?",
+      "expected_answer": "The document does not state the population of Tiruchirappalli.",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 4] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 4 Biochemical oxygen demand and coliform. Biochemical oxygen demand ranged from 1.2 to 9.8 milligrams per litre. The limit of 3 milligrams per litre was exceeded at 6 stations, all downstream of urban centres. Total coliform peaked at 24,000 MPN per 100 millilitres at Station 15, Tiruchirappalli, in October, against a limit of 500 MPN per 100 millilitres.\n\n_Support: 4/4 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "retrieved_pages": [
+        4,
+        6,
+        1,
+        5
+      ],
+      "best_score": 0.5,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 4,
+        "total": 4
+      },
+      "answer_relevancy": {
+        "score": 0.236828051507473,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the range of biochemical oxygen demand reported in the Kaveri River Basin Water Quality Study 2025?",
+          "How many stations exceeded the biochemical oxygen demand limit, and where were these stations located?"
+        ]
+      },
+      "context_precision": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "relevant_retrieved": 0
+      },
+      "context_recall": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "covered": 0,
+        "total": 0
+      },
+      "latency_ms": 60429.1,
+      "behaviour_ok": false
+    },
+    {
+      "id": "k24",
+      "doc": "kaveri",
+      "kind": "unanswerable",
+      "question": "Which laboratory analysed the Kaveri water samples?",
+      "expected_answer": "The document does not name the laboratory that analysed the samples.",
+      "answer": "Based on the uploaded PDF, the most relevant passage [p. 2] says:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 2 pH results. The pH ranged from 6.8 to 8.4 across all stations, within the acceptable range of 6.5 to 8.5. The lowest pH of 6.8 was recorded at Station 14, Erode, in August. The highest pH of 8.4 was recorded at Station 3, Mysuru, in March.\n\n_Support: 4/4 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        2,
+        1,
+        3,
+        6
+      ],
+      "best_score": 0.6223529577255249,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 4,
+        "total": 4
+      },
+      "answer_relevancy": {
+        "score": 0.4822049339612325,
+        "method": "ragas_style_llm_judge",
+        "generated_questions": [
+          "What was the overall pH range observed across all stations in the Kaveri River Basin Water Quality Study 2025?",
+          "Which station recorded the lowest pH value, what was that value, and in which month did it occur?",
+          "Which station recorded the highest pH value, what was that value, and in which month did it occur?"
+        ]
+      },
+      "context_precision": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "relevant_retrieved": 0
+      },
+      "context_recall": {
+        "score": null,
+        "method": "not_applicable_no_ground_truth",
+        "covered": 0,
+        "total": 0
+      },
+      "latency_ms": 60294.1,
+      "behaviour_ok": false
+    },
+    {
+      "id": "k25",
+      "doc": "kaveri",
+      "kind": "summary",
+      "question": "Summarize the Kaveri water quality findings.",
+      "expected_answer": "The Kaveri study monitored 18 stations from January to December 2025. pH stayed within the acceptable range, 14 of 18 stations met the dissolved oxygen standard, but biochemical oxygen demand exceeded its limit at 6 stations and total coliform peaked at 24,000 MPN per 100 millilitres at Tiruchirappalli. The study recommends sewage treatment upgrades, 30-metre buffer zones, real-time monitoring and a community app, at an estimated cost of 86 crore rupees over three years.",
+      "answer": "Based on the document [p. 1], here is an overview:\n\nKaveri River Basin Water Quality Study 2025 \u2014 Page 3 Dissolved oxygen. Kaveri River Basin Water Quality Study 2025 Study scope. This study monitored 18 stations along the Kaveri River, from Talakaveri in Karnataka to Poompuhar in Tamil Nadu, with samples collected monthly from January to December 2025. Kaveri River Basin Water Quality Study 2025 \u2014 Page 6 Recommendations.\n\n_Support: 4/4 claims backed by the document._",
+      "refused": false,
+      "citations": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "retrieved_pages": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "best_score": 1.0,
+      "dense_available": true,
+      "faithfulness": {
+        "score": 1.0,
+        "method": "deterministic_claim_check",
+        "supported": 4,
+        "total": 4
+      },
+      "answer_relevancy": {
+        "score": 0.7280042171478271,
+        "method": "embedding_cosine_proxy",
+        "generated_questions": []
+      },
+      "context_precision": {
+        "score": 0.8055555555555555,
+        "method": "page_ground_truth",
+        "relevant_retrieved": 3
+      },
+      "context_recall": {
+        "score": 0.8,
+        "method": "key_fact_coverage",
+        "covered": 4,
+        "total": 5,
+        "uncovered_facts": [
+          "24,000 MPN per 100 millilitres"
+        ]
+      },
+      "latency_ms": 120936.9
+    }
+  ],
+  "elapsed_s": 2844.1
+}

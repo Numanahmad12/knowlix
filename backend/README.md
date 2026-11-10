@@ -21,6 +21,10 @@ Extracted from the reference Streamlit app (commit 8250835 of `Numanahmad12/pdf_
 | PATCH | `/api/cache/settings` | Update cache thresholds, TTL, or toggle modes dynamically. |
 | POST | `/api/cache/benchmark/run` | Execute automated 3-mode architectural benchmark against active session. |
 | GET | `/api/cache/benchmarks` | Retrieve historical benchmark execution results. |
+| GET | `/api/eval/latest` | EvalLens: latest eval run (full scores). |
+| GET | `/api/eval/runs` | EvalLens: eval run history (summaries). |
+| GET | `/api/eval/runs/{run_id}` | EvalLens: one eval run (full scores). |
+| GET | `/eval` | EvalLens dashboard (HTML): latest scores, trends, per-question failures. |
 
 ## Knowlix Semantic Cache Engine
 
@@ -61,7 +65,28 @@ docker run --rm -p 8000:8000 -e GROQ_API_KEY=... knowlix-backend
 ```bash
 cd backend
 pytest -v              # 52 tests (all core, API, and semantic cache tests)
+pytest tests/test_evallens.py -q   # 14 EvalLens unit tests
+pytest tests/test_eval_gate.py -q  # EvalLens full 67-question quality gate
 ```
+
+## EvalLens — RAG evaluation harness
+
+EvalLens (`evallens/`) measures RAG quality against a 67-question golden
+set using the four RAGAS metrics (faithfulness, answer relevancy, context
+precision, context recall), running the real pipeline — never a mock.
+Full docs: [`evallens/README.md`](evallens/README.md).
+
+```bash
+cd backend
+python -m evallens.runner            # offline run (deterministic, ~10s)
+python -m evallens.runner --judge    # Groq LLM-as-judge (needs GROQ_API_KEY)
+python -m evallens.runner --gate     # exit non-zero if below thresholds
+```
+
+Baseline (2026-11-10, deterministic, 67 questions): faithfulness 1.000,
+answer relevancy 0.613, context precision 0.953, context recall 0.997,
+refusal accuracy 0.167. Dashboard at `/eval` when the server is running.
+CI gate: `.github/workflows/eval.yml`.
 
 ## Layout
 

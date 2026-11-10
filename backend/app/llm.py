@@ -14,6 +14,7 @@ No live Groq call is ever made in tests — monkeypatch ``_get_groq_session``
 import logging
 import os
 import re
+import time
 from typing import List
 
 try:
@@ -51,8 +52,39 @@ def _get_groq_session():
     return _groq_session
 
 
+# Rate-limit retries: Groq's free tier is ~30 requests/minute, so a burst of
+# calls (e.g. an EvalLens judge run, or several users at once) can hit 429s.
+# Retrying a 429 / 5xx with backoff turns those transient failures into
+# successes instead of silent extractive fallbacks. Other failures (4xx
+# except 429, connection errors, bad payloads) still fail fast as before.
+_MAX_ATTEMPTS = 3
+_RETRY_BACKOFF_S = (1.0, 2.0)  # sleeps before attempts 2 and 3
+
+
+def _retryable_status(status: int | None) -> bool:
+    return status is not None and (status == 429 or status >= 500)
+
+
+def _retry_after_s(response) -> float | None:
+    """Seconds from a Retry-After header, if present and sane (max 30s)."""
+    try:
+        raw = (response.headers or {}).get("Retry-After")
+        if raw is None:
+            return None
+        value = float(raw)
+        return min(max(value, 0.0), 30.0)
+    except Exception:
+        return None
+
+
 def _chat_completion(system_prompt: str, user_prompt: str, max_tokens: int) -> str:
-    """One Groq chat-completions call. Returns the reply text or "" on any failure."""
+    """One Groq chat-completions call. Returns the reply text or "" on any failure.
+
+    Retries 429 / 5xx responses (up to 3 attempts, exponential backoff,
+    honouring Retry-After) — the Groq free tier rate-limits bursts, and a
+    retry is strictly better than the extractive fallback for a transient
+    limit. Non-retryable failures still return "" immediately.
+    """
     api_key = _get_groq_api_key()
     if not api_key:
         return ""
@@ -60,32 +92,52 @@ def _chat_completion(system_prompt: str, user_prompt: str, max_tokens: int) -> s
     if session is None:
         return ""
 
-    try:
-        response = session.post(
-            GROQ_API_URL,
-            headers={"Authorization": f"Bearer {api_key}"},
-            json={
-                "model": GROQ_MODEL,
-                "messages": [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt},
-                ],
-                "max_tokens": max_tokens,
-                "temperature": 0.2,
-            },
-            timeout=60,
-        )
-        response.raise_for_status()
-        payload = response.json()
-        choices = payload.get("choices") or []
-        if not choices:
-            return ""
-        message = choices[0].get("message") or {}
-        return (message.get("content") or "").strip()
-    except Exception as exc:
-        # Never raise from generation — callers fall back to extractive.
-        logger.warning("Groq call failed (%s). Falling back to extractive generation.", exc)
-        return ""
+    last_exc = None
+    for attempt in range(1, _MAX_ATTEMPTS + 1):
+        try:
+            response = session.post(
+                GROQ_API_URL,
+                headers={"Authorization": f"Bearer {api_key}"},
+                json={
+                    "model": GROQ_MODEL,
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                    "max_tokens": max_tokens,
+                    "temperature": 0.2,
+                },
+                timeout=60,
+            )
+            response.raise_for_status()
+            payload = response.json()
+            choices = payload.get("choices") or []
+            if not choices:
+                return ""
+            message = choices[0].get("message") or {}
+            return (message.get("content") or "").strip()
+        except Exception as exc:
+            last_exc = exc
+            status = None
+            response = getattr(exc, "response", None)
+            if response is not None:
+                status = getattr(response, "status_code", None)
+            if _retryable_status(status) and attempt < _MAX_ATTEMPTS:
+                wait = _retry_after_s(response)
+                if wait is None:
+                    wait = _RETRY_BACKOFF_S[attempt - 1]
+                logger.warning(
+                    "Groq call failed with HTTP %s (attempt %d/%d); "
+                    "retrying in %.1fs.",
+                    status, attempt, _MAX_ATTEMPTS, wait,
+                )
+                time.sleep(wait)
+                continue
+            # Non-retryable, or out of attempts — fall through to "".
+            break
+    # Never raise from generation — callers fall back to extractive.
+    logger.warning("Groq call failed (%s). Falling back to extractive generation.", last_exc)
+    return ""
 
 
 def generate_text(prompt: str, max_tokens: int = 180) -> str:
