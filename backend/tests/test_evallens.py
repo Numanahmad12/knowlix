@@ -199,3 +199,32 @@ def test_gate_check_passes_and_fails():
     bad = dict(good, aggregates=dict(good["aggregates"], faithfulness=0.1))
     failures = runner.check_gate(bad)
     assert failures and "faithfulness" in failures[0]
+
+
+# ── Dashboard (v3) ───────────────────────────────────────────────────────────
+
+def test_latest_run_skips_partial_probe():
+    """latest_run() must return the newest FULL run, never a probe file."""
+    from evallens import store
+
+    latest = store.latest_run()
+    assert latest is not None
+    assert latest["n_questions"] == 67, f"latest is a partial run: {latest['id']}"
+    assert latest["id"] == "20261110T154611Z"
+
+
+def test_dashboard_renders_latest_full_run():
+    """render_dashboard() shows the latest full run with the v3 explorer."""
+    from evallens import dashboard, store
+
+    runs = store.list_runs()
+    latest = store.latest_run()
+    page = dashboard.render_dashboard(runs, latest)
+    assert latest["id"] in page
+    # 67 server-rendered rows + 1 identical row template inside the JS.
+    assert page.count("<tr class='qrow'") == 68, "explorer must render all 67 questions"
+    assert "Question explorer" in page
+    assert "run-switch" in page and "trend-dot" in page
+    assert "Gate failed" in page  # Run 4 fails its refusal gate (0.667 < 0.80)
+    assert "partial probe run" in page  # the 2-question probe is disclosed, not hidden
+    assert "eval-data" in page  # embedded JSON for the client-side interactivity

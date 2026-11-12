@@ -37,14 +37,32 @@ def list_runs(runs_dir: Path = RUNS_DIR) -> list[dict]:
 
 
 def latest_run(runs_dir: Path = RUNS_DIR) -> dict | None:
-    """The newest full run dict, or None when no runs exist yet."""
+    """The newest full run dict, or None when no runs exist yet.
+
+    Partial runs (a probe with 2 questions, a run killed mid-way) never
+    become "latest" — the dashboard and /api/eval/latest show the newest
+    run with the full question count instead. Partials stay listed in
+    history and loadable by id.
+    """
     if not runs_dir.exists():
         return None
     paths = sorted(runs_dir.glob("*.json"), reverse=True)
     if not paths:
         return None
-    with open(paths[0], encoding="utf-8") as fh:
-        return json.load(fh)
+    loaded = []
+    for path in paths:
+        try:
+            with open(path, encoding="utf-8") as fh:
+                loaded.append(json.load(fh))
+        except Exception:
+            continue
+    if not loaded:
+        return None
+    max_n = max((d.get("n_questions") or 0) for d in loaded)
+    for data in loaded:
+        if (data.get("n_questions") or 0) == max_n:
+            return data
+    return loaded[0]
 
 
 def load_run(run_id: str, runs_dir: Path = RUNS_DIR) -> dict | None:
